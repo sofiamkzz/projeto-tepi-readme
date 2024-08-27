@@ -1,5 +1,9 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
+
+// não esquecer do npm install cookie-parser express-session
 
 // Configurando EJS como view engine
 app.set('view engine', 'ejs');
@@ -11,9 +15,30 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware para servir arquivos estáticos
 app.use(express.static('public'));
 
+// Middleware para parsing de cookies
+app.use(cookieParser());
+
+// Configuração de sessões
+app.use(session({
+    secret: 'seuSegredoMuitoSecreto',  // Troque isso por uma chave secreta mais segura
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }  // Defina como true se estiver usando HTTPS
+}));
+
 // Rota padrão para renderizar a página index.ejs
 app.get('/', (req, res) => {
-    res.render('index');
+    // Definindo um cookie
+    res.cookie('cookieName', 'cookieValue', { maxAge: 900000, httpOnly: true });
+
+    // Usando a sessão
+    if (req.session.visits) {
+        req.session.visits += 1;
+    } else {
+        req.session.visits = 1;
+    }
+
+    res.render('index', { visits: req.session.visits });
 });
 
 // Middleware para tratamento de erros 404
