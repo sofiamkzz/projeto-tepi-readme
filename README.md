@@ -2,7 +2,7 @@
 
 Projeto da disciplina de TÓPICOS ESPECIAIS E PROJETO INTEGRADOR.
 
-## Tecnologias Utilizadas 🚀
+## Tecnologias utilizadas
 
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 ![Logo do JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
@@ -10,7 +10,7 @@ Projeto da disciplina de TÓPICOS ESPECIAIS E PROJETO INTEGRADOR.
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
-## Integrantes 🤝🏻
+## Integrantes 
 
 | Nome              | Função                                      |
 | :---------------- | :------------------------------------------ |
