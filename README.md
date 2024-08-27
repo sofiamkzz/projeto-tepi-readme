@@ -20,6 +20,13 @@ Projeto da disciplina de TÓPICOS ESPECIAIS E PROJETO INTEGRADOR.
 | Raissa Felix      | Designer / Desenvolvedora Front-end         |
 | Sofia Laura       | Desenvolvedora Back-end                     |
 
+## Funcionalidades
+
+- **Autenticação de Usuários:** Sistema de login e registro seguro.
+- **Gerenciamento de Dados:** Criação, leitura, atualização e exclusão de dados através de uma interface intuitiva.
+- **Interface Responsiva:** Design adaptável a diferentes tamanhos de tela usando Bootstrap.
+- **Comunicação com Backend:** Utilização de Express.js e Node.js para interagir com o banco de dados e processar lógica de negócios.
+
 ## Referências
 
 - **[Documentação do Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)**
