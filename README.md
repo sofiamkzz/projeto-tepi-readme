@@ -1,14 +1,8 @@
 # PROJETO:  
 
-Projeto da disciplina de TÓPICOS ESPECIAIS E PROJETO INTEGRADOR.
+## Introdução
 
-## Tecnologias utilizadas
-
-![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
-![Logo do JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
-![Logo do Node.js](https://img.shields.io/badge/Node.js-2B8244?style=for-the-badge&logo=node.js&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
-![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+Este projeto foi desenvolvido como parte da disciplina de Tópicos Especiais e Projeto Integrador. O objetivo é criar uma aplicação web utilizando um conjunto de tecnologias modernas para atender a requisitos específicos definidos pela equipe. A aplicação combina front-end e back-end para proporcionar uma experiência completa ao usuário.
 
 ## Integrantes 
 
