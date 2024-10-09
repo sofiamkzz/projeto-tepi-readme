@@ -3,8 +3,6 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const app = express();
 
-// não esquecer do npm install cookie-parser express-session
-
 // Configurando EJS como view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
