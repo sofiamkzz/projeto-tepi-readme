@@ -21,7 +21,7 @@ Este projeto, parte da disciplina de Tópicos Especiais e Projeto Integrador, vi
 - **Pedido:** Processo de compra com confirmação e atualização de status.
 - **Doação:** Cálculo, exibição da doação mensal e relatórios sobre o total arrecadado.
 - **Gerenciamento de Conta do Usuário:** Atualização de informações pessoais e histórico de compras.
-- Adicional: Gestão do cartão fidelidade.
+- **Adicional:** Gestão do cartão fidelidade.
 
 ## Referências
 
