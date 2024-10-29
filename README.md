@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Este projeto foi desenvolvido como parte da disciplina de Tópicos Especiais e Projeto Integrador. O objetivo é criar uma aplicação web utilizando um conjunto de tecnologias modernas para atender a requisitos específicos definidos pela equipe. A aplicação combina front-end e back-end para proporcionar uma experiência completa ao usuário.
+Este projeto, parte da disciplina de Tópicos Especiais e Projeto Integrador, visa criar uma aplicação web moderna que integra front-end e back-end, atendendo a requisitos específicos da equipe. **Viva Colors** é uma loja online que une a venda de produtos à promoção de causas sociais, destinando mensalmente uma porcentagem das vendas a iniciativas de justiça e igualdade. A proposta é oferecer uma experiência de compra que permita aos clientes contribuir ativamente para um mundo mais justo.
 
 ## Integrantes 
 
@@ -16,10 +16,12 @@ Este projeto foi desenvolvido como parte da disciplina de Tópicos Especiais e P
 
 ## Funcionalidades
 
-- **Autenticação de Usuários:** Sistema de login e registro seguro.
-- **Gerenciamento de Dados:** Criação, leitura, atualização e exclusão de dados através de uma interface intuitiva.
-- **Interface Responsiva:** Design adaptável a diferentes tamanhos de tela usando Bootstrap.
-- **Comunicação com Backend:** Utilização de Express.js e Node.js para interagir com o banco de dados e processar lógica de negócios.
+- **Cadastro e Login de Usuário:** Cadastro e login por e-mail e senha.
+- **Carrinho de Compras:** Adição, visualização e gerenciamento de itens. Além do cálculo do valor total da compra.
+- **Pedido:** Processo de compra com confirmação e atualização de status.
+- **Doação:** Cálculo, exibição da doação mensal e relatórios sobre o total arrecadado.
+- **Gerenciamento de Conta do Usuário:** Atualização de informações pessoais e histórico de compras.
+- Adicional: Gestão do cartão fidelidade.
 
 ## Referências
 
