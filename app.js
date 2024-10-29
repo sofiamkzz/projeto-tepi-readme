@@ -1,56 +1,53 @@
+// app.js
+
+// Carrega variáveis de ambiente do .env
+require('dotenv').config();
+
 const express = require('express');
-const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const session = require('express-session');
+const { getLoginPage, createUser, loginUser, logoutUser } = require('./controllers/controller');
+
 const app = express();
+const port = 3000;
 
-// Configurando EJS como view engine
 app.set('view engine', 'ejs');
-app.set('views', './views');
 
-// Middleware para processar dados do formulário
-app.use(express.urlencoded({ extended: true }));
+// Middlewares para parsear dados do corpo das requisições
+app.use(express.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Middleware para servir arquivos estáticos
-app.use(express.static('public'));
-
-// Middleware para parsing de cookies
-app.use(cookieParser());
-
-// Configuração de sessões
 app.use(session({
-    secret: 'seuSegredoMuitoSecreto',  // Troque isso por uma chave secreta mais segura
+    secret: process.env.SESSION_SECRET || 'your_default_secret_key', // Use an environment variable
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }  // Defina como true se estiver usando HTTPS
+    cookie: { secure: false } // Set to true if using HTTPS
 }));
 
-// Rota padrão para renderizar a página index.ejs
-app.get('/', (req, res) => {
-    // Definindo um cookie
-    res.cookie('cookieName', 'cookieValue', { maxAge: 900000, httpOnly: true });
+// Rota principal (GET)
+app.get('/', getLoginPage);
 
-    // Usando a sessão
-    if (req.session.visits) {
-        req.session.visits += 1;
-    } else {
-        req.session.visits = 1;
-    }
+// Rota de Login
+app.post('/login', loginUser);
 
-    res.render('index', { visits: req.session.visits });
+// Rota de cadastro (GET)
+app.get('/cadastro', (req, res) => {
+    res.render('cadastro', { mensagem: '' }); 
 });
 
-// Middleware para tratamento de erros 404
-app.use((req, res, next) => {
-    res.status(404).send('Página não encontrada');
-});
+// Rota de cadastro (POST)
+app.post('/cadastro', createUser); 
 
-// Middleware para tratamento de erros genéricos
+// Rota de Logout
+app.get('/logout', logoutUser);
+
+// Middleware de erro
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Algo deu errado!');
 });
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`O servidor está rodando na porta ${PORT}`);
+// Servidor ouvindo na porta 3000
+app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
 });
