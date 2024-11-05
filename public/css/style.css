@@ -1,1 +1,84 @@
+/* Background and color customization */
+body {
+    background-color: var(--light-color);
+    font-family: 'Poppins', sans-serif;
+}
 
+:root {
+    --main-color: #d42249;
+    /* Cor vibrante e sofisticada */
+    --accent-color: #ffccf9;
+    --secondary-color: #6a0572;
+    /* Roxo sofisticado */
+    --light-color: #fff4f9;
+    --footer-background: #f8d7da;
+    --footer-text: #d6336c;
+}
+
+
+.bg-light-pink {
+    background: #d42249;
+    background: linear-gradient(90deg, #e70a3a8f 0%, rgba(255, 255, 255, 0) 48%, rgba(209, 11, 54, 0.564) 100%);
+}
+
+.lead {
+    color: #6a0572;
+    ;
+}
+
+.text-dark-pink {
+    color: #e10b3d;
+}
+
+/* Botões mais sofisticados com gradiente */
+.btn-main {
+    background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 30px;
+}
+
+.btn-main:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.bg-dark-pink {
+    background-color: #d6336c;
+}
+
+.btn-outline-dark-pink {
+    border-color: #d6336c;
+    color: #d6336c;
+}
+
+.btn-outline-dark-pink:hover {
+    background-color: #d6336c;
+    color: white;
+}
+
+/* Styling for cards */
+.card {
+    margin-bottom: 30px;
+    border: none;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* Styling for the carousel */
+.carousel-item img {
+    object-fit: cover;
+    height: 600px;
+
+}
+
+/* Footer styling */
+footer {
+    background-color: #d6336c;
+}
