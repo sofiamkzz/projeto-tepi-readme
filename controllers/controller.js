@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 // Render the login page
 const getLoginPage = (req, res) => {
-    res.render('index', { mensagem: '' });
+    res.render('login', { mensagem: '' });
 };
 
 // Handle user login
@@ -18,23 +18,23 @@ const loginUser = async (req, res) => {
         
         // Verifica se o usuário existe
         if (!user) {
-            return res.render('index', { mensagem: 'Usuário não encontrado' });
+            return res.render('login', { mensagem: 'Usuário não encontrado' });
         }
 
         // Verifica se a senha fornecida corresponde ao hash armazenado
         const hashedPassword = await bcrypt.hash(password, 10);
         const isMatch = await bcrypt.compare(password, hashedPassword);
         if (!isMatch) {
-            return res.render('index', { mensagem: 'Senha incorreta' });
+            return res.render('login', { mensagem: 'Senha incorreta' });
         }
 
         // Lógica de autenticação, como criar uma sessão
         req.session.userId = user.id; // Armazenar o ID do usuário na sessão
 
-        res.render('home', { email }); // Redireciona para uma página após o login bem-sucedido
+        res.render('conta', { email }); // Redireciona para uma página após o login bem-sucedido
     } catch (error) {
         console.error('Erro no login:', error);
-        res.render('index', { mensagem: 'Erro ao fazer login.' });
+        res.render('login', { mensagem: 'Erro ao fazer login.' });
     }
 };
 
@@ -71,7 +71,7 @@ const logoutUser = async (req, res) => {
             console.error('Erro ao deslogar:', err);
             return res.redirect('/');
         }
-        res.render('index', { mensagem: 'Usuário deslogado com sucesso!' });
+        res.render('login', { mensagem: 'Usuário deslogado com sucesso!' });
     });
 };
 
