@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Viva Colors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --main-color: #d42249;
+            --accent-color: #ffccf9;
+            --secondary-color: #6a0572;
+            --light-color: #fff4f9;
+            --dark-pink: #d42249;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            background-color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .navbar {
+            background: #d42249;
+            background: linear-gradient(90deg, #e70a3a8f 20%, rgba(255, 255, 255, 0) 78%, rgba(209, 11, 54, 0.564) 100%);
+        }
+
+        .navbar-brand {
+            color: #ffffff !important;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: black !important;
+        }
+
+        img {
+            border-radius: 25px;
+        }
+
+        .form-control {
+            background-color: #fff4f78f;
+        }
+
+        h1 {
+            color: var(--main-color);
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            flex: 1;
+        }
+
+        .form-container {
+            max-width: 600px;
+            /* Aumentando a largura da div */
+            margin: 50px auto;
+            /* Centralizando vertical e horizontalmente */
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f0dadf8f;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            color: var(--secondary-color);
+        }
+
+        .btn-main {
+            background-color: var(--main-color);
+            color: white;
+        }
+
+        .btn-main:hover {
+            background-color: var(--dark-pink);
+        }
+
+        footer {
+            background: #d42249;
+            background: linear-gradient(90deg, #e70a3a8f 28%, rgba(255, 255, 255, 0) 48%, rgba(209, 11, 54, 0.564) 90%);
+            height: 60px;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <div class="navbar-brand fw-bold text-dark-pink">
+                <img src="/images/logo.jpg" alt="Logo Luivin's" style="height: 50px;">
+                Viva Colors
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#">Cadastro</a></li>
+                    <li class="nav-item"><a class="nav-link" href="minhaconta.html">Minha Conta</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cadastro Form -->
+    <div class="container my-5" id="cadastro">
+        <div class="form-container">
+            <h1 class="text-center">Cadastro</h1>
+            <form action="/cadastro" method="POST">
+                <div class="form-group mb-3">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Digite seu nome" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="emailCadastro">Email</label>
+                    <input type="email" class="form-control" id="emailCadastro" placeholder="Digite seu email" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="senhaCadastro">Senha</label>
+                    <input type="password" class="form-control" id="senhaCadastro" placeholder="Digite sua senha"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-main btn-block">Cadastrar</button>
+                <p class="text-center mt-3">Já tem uma conta? <a href="#">Faça login</a>.</p>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-light py-4">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
