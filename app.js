@@ -1,15 +1,16 @@
-// app.js
-
 // Carrega variáveis de ambiente do .env
 require('dotenv').config();
 
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const path = require('path');
 const { getLoginPage, createUser, loginUser, logoutUser } = require('./controllers/controller');
 
 const app = express();
 const port = 3000;
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'ejs');
 
