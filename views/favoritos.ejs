@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Favoritos - Viva Colors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Paleta de cores refinadas e elegantes */
+        :root {
+            --main-color: #d42249;
+            /* Cor vibrante e sofisticada */
+            --accent-color: #ffccf9;
+            --secondary-color: #6a0572;
+            /* Roxo sofisticado */
+            --light-color: #fff4f9;
+            --footer-background: #f8d7da;
+            --footer-text: #d6336c;
+        }
+
+        body {
+            background-color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
+        }
+
+        /* Cabeçalho com gradiente vibrante */
+        .bg-gradient {
+            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+        }
+
+        /* Estilo para o título h1 */
+        h1 {
+            color: #ff6f91;
+            /* Nova cor vibrante para o título */
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Botões mais sofisticados com gradiente */
+        .btn-main {
+            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 30px;
+        }
+
+        .btn-main:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Cartões com design moderno e sombras suaves */
+        .favorite-card {
+            border-radius: 20px;
+            background-color: white;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .favorite-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Remover favorito com destaque */
+        .remove-favorite {
+            color: var(--main-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .remove-favorite:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Títulos elegantes */
+        h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Rodapé elegante */
+        footer {
+            background-color: var(--footer-background);
+        }
+
+        footer p {
+            color: var(--footer-text);
+        }
+
+        /* Estilo adicional para o gradiente rosa claro */
+        .bg-light-pink {
+            background: #d42249;
+            background: linear-gradient(90deg, #d422498f 0%, rgba(255, 255, 255, 0) 48%, rgba(212, 34, 73, 0.5635504201680672) 100%);
+        }
+
+        /* Título do cabeçalho com nova cor */
+        .text-dark-pink {
+            color: #d42249;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header com gradiente rosa claro -->
+    <header class="bg-light-pink py-3">
+        <div class="container text-center">
+            <h1 class="text-dark-pink fw-bold">Meus Favoritos</h1>
+            <p class="lead">Explore e compre seus itens favoritos da nossa papelaria!</p>
+        </div>
+    </header>
+
+    <!-- Lista de Favoritos -->
+    <main class="container my-5">
+        <div class="row text-center g-4">
+            <!-- Produto Favorito 1 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/caneta_gel_0_5mm_molin_flowers_18905_1_76afef01e147364b2e08014134ad0ef2.jpg"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Caneta Gel 0.5mm Molin</h5>
+                    <p class="text-main">R$ 24,50</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 2 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/caderno_universitario_tilibra_connect_10_materias_bunnyfly_19875_1_294eccbadcf81f92597acc0957ea97a3.jpg"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Caderno Tilibra 10 Matérias</h5>
+                    <p class="text-main">R$ 48,50</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 3 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://images.tcdn.com.br/img/img_prod/750218/papel_de_carta_universitario_dac_50_folhas_90g_disney_ursinho_pooh_10242_1_379e6796690549d7624b34d3a9fcd11c.jpg"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Papel de Carta universitário DAC 50 folhas 90g Disney Ursinho Pooh</h5>
+                    <p class="text-main">R$ 39,48</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 4 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://acdn.mitiendanube.com/stores/002/110/341/products/348-d5a904090f068f559a17246758765022-1024-1024.webp"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Calendario De Mesa Cicero 2025 Bossa Nova 13x15</h5>
+                    <p class="text-main">R$ 39,90</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 5 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://acdn.mitiendanube.com/stores/002/110/341/products/fa6dfef07d439062f49f45d13893f578-510163f11d3a87628a17241849161270-480-0.webp"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Planner Semanal Office Wire-O Cicero 2025 Melissa Casinha Das Abelhas 15,5x9</h5>
+                    <p class="text-main">R$ 69,90</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Produto Favorito 6 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://acdn.mitiendanube.com/stores/002/110/341/products/78779-f4994189fd3ef17b3716533329068674-480-0.webp"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Caneta Marca Texto Cis Lumini EX Ponta Dupla Verde</h5>
+                    <p class="text-main">R$ 10,90</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 7 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://images.tcdn.com.br/img/img_prod/750218/borracha_fantasia_star_10138_1_da200372625a9f49313f2b972335718b.jpg"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Borracha Fantasia Star</h5>
+                    <p class="text-main">R$ 15,50</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 8 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://images.tcdn.com.br/img/img_prod/750218/estojo_dac_stickers_hello_10256_1_f231695a66acb0d743167e5a0a75f75a.jpg"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Estojo Dac Stickers Hello</h5>
+                    <p class="text-main">R$ 54,86</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Produto Favorito 9 -->
+            <div class="col-md-4">
+                <div class="favorite-card shadow-sm">
+                    <img src="https://images.tcdn.com.br/img/img_prod/750218/mini_ficheiro_dac_com_80_folhas_90g_disney_stitch_10236_1_d8c00cab0e6e822a00c8b56cd7faa8fb.jpg"
+                        alt="Produto" class="img-fluid rounded">
+                    <h5 class="mt-3">Mini Ficheiro DAC com 80 Folhas 90g Disney Stitch</h5>
+                    <p class="text-main">R$ 58,12</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                        <i class="fas fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <!-- Rodapé elegante -->
+    <footer class="bg-light-pink py-4">
+        <div class="container text-center">
+            <p class="text-dark-pink mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
