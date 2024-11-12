@@ -166,7 +166,7 @@
     </nav>
 
     <!-- Minha Conta Header -->
-    <header class="text-center">
+    <header class="text-center my-5">
         <div class="container">
             <h1>Admin - Gerenciar Usuários</h1>
             <p class="lead">Aqui você pode atualizar ou remover usuários</p>
@@ -184,38 +184,32 @@
         <!-- Lista de Usuários -->
         <div class="user-list-panel">
             <h4>Usuários Registrados</h4>
-            <div class="user-card">
-                <div>
-                    <p><strong>João Silva</strong><br>joao.silva@gmail.com</p>
-                </div>
-                <div>
-                    <button class="btn btn-warning">Atualizar</button>
-                    <button class="btn btn-danger">Remover</button>
-                </div>
-            </div>
-
-            <div class="user-card">
-                <div>
-                    <p><strong>Ana Pereira</strong><br>ana.pereira@gmail.com</p>
-                </div>
-                <div>
-                    <button class="btn btn-warning">Atualizar</button>
-                    <button class="btn btn-danger">Remover</button>
-                </div>
-            </div>
-
-            <div class="user-card">
-                <div>
-                    <p><strong>Carlos Souza</strong><br>carlos.souza@gmail.com</p>
-                </div>
-                <div>
-                    <button class="btn btn-warning">Atualizar</button>
-                    <button class="btn btn-danger">Remover</button>
-                </div>
-            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop para exibir os usuários -->
+                    <% usuarios.forEach(function(usuario) { %>
+                        <tr>
+                            <td><%= usuario.nome %></td>
+                            <td><%= usuario.email %></td>
+                            <td>
+                                <button class="btn btn-warning">Atualizar</button>
+                                <button class="btn btn-danger">Remover</button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="bg-light py-4">
         <div class="container text-center">
             <p class="mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
@@ -224,5 +218,4 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

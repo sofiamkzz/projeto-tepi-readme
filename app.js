@@ -15,14 +15,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
 // Middlewares para parsear dados do corpo das requisições
-app.use(express.json()); 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Middleware para sessões
 app.use(session({
     secret: process.env.SESSION_SECRET || 'your_default_secret_key', // Use an environment variable
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Set to true if using HTTPS
+    cookie: { secure: false } // Defina como true se estiver usando HTTPS
 }));
 
 // Rota principal (GET)
@@ -33,14 +34,19 @@ app.post('/login', loginUser);
 
 // Rota de cadastro (GET)
 app.get('/cadastro', (req, res) => {
-    res.render('cadastro', { mensagem: '' }); 
+    res.render('cadastro', { mensagem: '' });
 });
 
 // Rota de cadastro (POST)
-app.post('/cadastro', createUser); 
+app.post('/cadastro', createUser);
 
 // Rota de Logout
 app.get('/logout', logoutUser);
+
+// Rota de Admin (Protegida para administradores)
+app.get('/admin', isAdmin, (req, res) => {
+    res.render('admin'); // Página exclusiva para administradores
+});
 
 // Middleware de erro
 app.use((err, req, res, next) => {

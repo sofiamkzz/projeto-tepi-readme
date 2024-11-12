@@ -7,105 +7,6 @@
     <title>Carrinho de Compras - Viva Colors</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Paleta de cores refinadas e elegantes */
-        :root {
-            --main-color: #d42249;
-            /* Cor vibrante e sofisticada */
-            --accent-color: #ffccf9;
-            --secondary-color: #6a0572;
-            /* Roxo sofisticado */
-            --light-color: #fff4f9;
-        }
-
-        body {
-            background-color: var(--light-color);
-            font-family: 'Poppins', sans-serif;
-            color: var(--secondary-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        main {
-            flex: 1;
-        }
-
-        /* Cabeçalho com gradiente vibrante */
-        .bg-gradient {
-            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
-        }
-
-        /* Estilo para o título h2 */
-        h2 {
-            color: var(--main-color);
-            font-weight: bold;
-        }
-
-        /* Botões mais sofisticados com gradiente */
-        .btn-main {
-            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 30px;
-        }
-
-        .btn-main:hover {
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(-3px);
-        }
-
-        /* Estilo das cartas do carrinho */
-        .card {
-            margin-bottom: 30px;
-            border: none;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        /* Footer elegante */
-        footer {
-            background-color: #d6336c;
-            /* Cor personalizada do footer */
-            color: white;
-            padding: 20px 0;
-        }
-
-        /* Estilo do novo footer */
-        .bg-light-pink {
-            background: #d42249;
-            background: linear-gradient(90deg, #d422498f 0%, rgba(255, 255, 255, 0) 48%, rgba(212, 34, 73, 0.5635504201680672) 100%);
-        }
-
-        .text-dark-pink {
-            color: #6a0572;
-        }
-
-        /* Navbar refinada */
-        .navbar-light .navbar-brand {
-            color: var(--main-color);
-        }
-
-        .navbar-light .nav-link {
-            color: var(--secondary-color);
-        }
-
-        .navbar-light .nav-link:hover {
-            color: var(--main-color);
-        }
-
-        /* Badge para o carrinho de compras */
-        .badge {
-            background-color: var(--main-color);
-            font-size: 0.8rem;
-        }
-    </style>
 </head>
 
 <body>
@@ -113,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <div class="navbar-brand fw-bold">
-                <img src="papelaria.jpg" alt="Logo Luivin's" style="height: 50px;">
+                <img src="papelaria.jpg" alt="Logo Viva Colors" style="height: 50px;">
                 Viva Colors
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -129,7 +30,7 @@
                     <li class="nav-item cart-icon">
                         <a class="nav-link" href="#">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="badge">0</span>
+                            <span class="badge">{{cartItems.length}}</span>
                         </a>
                     </li>
                 </ul>
@@ -150,52 +51,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img src="https://images.tcdn.com.br/img/img_prod/1106500/caneta_gel_0_5mm_molin_flowers_18905_1_76afef01e147364b2e08014134ad0ef2.jpg"
-                                alt="Caneta Gel" style="width: 50px; height: auto;" class="me-3">
-                            Caneta Gel 0.5mm Molin Flowers
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" value="1" min="1">
-                    </td>
-                    <td>R$ 24,50</td>
-                    <td>
-                        <button class="btn btn-danger">Remover</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <img src="https://images.tcdn.com.br/img/img_prod/1106500/caderno_universitario_tilibra_connect_10_materias_bunnyfly_19875_1_294eccbadcf81f92597acc0957ea97a3.jpg"
-                                alt="Caderno" style="width: 50px; height: auto;" class="me-3">
-                            Caderno UNIVERSITÁRIO Tilibra Connect 10 Matérias BunnyFly
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" class="form-control" value="1" min="1">
-                    </td>
-                    <td>R$ 48,50</td>
-                    <td>
-                        <button class="btn btn-danger">Remover</button>
-                    </td>
-                </tr>
+                <% cartItems.forEach(item => { %>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="<%= item.Product.image %>" alt="<%= item.Product.name %>" style="width: 50px; height: auto;" class="me-3">
+                                <%= item.Product.name %>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" value="<%= item.quantity %>" min="1">
+                        </td>
+                        <td>R$ <%= item.price.toFixed(2) %></td>
+                        <td>
+                            <a href="/remover-carrinho/<%= item.id %>" class="btn btn-danger">Remover</a>
+                        </td>
+                    </tr>
+                <% }) %>
             </tbody>
         </table>
         <div class="text-end">
-            <h4>Total: R$ 73,00</h4>
+            <h4>Total: R$ <%= total %></h4>
             <a href="#" class="btn btn-main">Finalizar Compra</a>
         </div>
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-light-pink py-4">
-        <div class="container text-center">
-            <p class="text-dark-pink mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
-        </div>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
