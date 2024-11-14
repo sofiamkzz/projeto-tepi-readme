@@ -110,9 +110,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Cadastro</a></li>
-                    <li class="nav-item"><a class="nav-link" href="minhaconta.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/cadastro">Cadastro</a></li>
                 </ul>
             </div>
         </div>
@@ -125,18 +124,21 @@
             <form action="/cadastro" method="POST">
                 <div class="form-group mb-3">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" name="name" id="nomeCadastro" placeholder="Digite seu nome" required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Digite seu nome" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="emailCadastro">Email</label>
-                    <input type="email" class="form-control" name="email" id="emailCadastro" placeholder="Digite seu email" required>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="Digite seu email" required>
                 </div>
                 <div class="form-group mb-3">
                     <label for="senhaCadastro">Senha</label>
-                    <input type="password" class="form-control" name="password" id="senhaCadastro" placeholder="Digite sua senha" required>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Digite sua senha" required>
                 </div>
                 <button type="submit" class="btn btn-main btn-block">Cadastrar</button>
-                <p class="text-center mt-3">Já tem uma conta? <a href="#">Faça login</a>.</p>
+                <p>
+                    <%= mensagem %>
+                </p>
+                <p class="text-center mt-3">Já tem uma conta? <a href="/">Faça login</a>.</p>
             </form>
         </div>
     </div>

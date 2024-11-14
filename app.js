@@ -5,7 +5,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
-const { getLoginPage, createUser, loginUser, logoutUser } = require('./controllers/controller');
+const userRoutes = require('./routes/userRoutes'); // Importando rotas de usuário
+const authRoutes = require('./routes/authRoutes'); // Importando rotas de autenticação
+const cartRoutes = require('./routes/cartRoutes'); // Importando rotas de carrinho
+const { isAdmin } = require('./middleware/isAdmin'); // Middleware para verificar admin, se necessário
 
 const app = express();
 const port = 3000;
@@ -20,38 +23,45 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware para sessões
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your_default_secret_key', // Use an environment variable
+    secret: process.env.SESSION_SECRET || 'your_default_secret_key', // Use uma variável de ambiente
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false } // Defina como true se estiver usando HTTPS
 }));
 
 // Rota principal (GET)
-app.get('/', getLoginPage);
-
-// Rota de Login
-app.post('/login', loginUser);
-
-// Rota de cadastro (GET)
-app.get('/cadastro', (req, res) => {
-    res.render('cadastro', { mensagem: '' });
+app.get('/', (req, res) => {
+    res.redirect('/login');
 });
 
-// Rota de cadastro (POST)
-app.post('/cadastro', createUser);
+// Rota de Login e Logout
+app.use('/', authRoutes);
 
-// Rota de Logout
-app.get('/logout', logoutUser);
+// Rotas de Usuário
+app.use('/user', userRoutes);
 
-// Rota de Admin (Protegida para administradores)
-app.get('/admin', isAdmin, (req, res) => {
-    res.render('admin'); // Página exclusiva para administradores
+// Rotas de Carrinho
+app.use('/carrinho', cartRoutes);
+
+// Rota de Admin (Protegida por Middleware de Admin, caso necessário)
+app.get('/admin', isAdmin, async (req, res) => {
+    try {
+        // Buscar todos os usuários no banco de dados
+        const users = await User.findAll();
+        res.render('admin', { usuarios: users || [] });
+    } catch (error) {
+        console.error('Erro ao buscar usuários:', error);
+        res.status(500).send('Erro ao carregar a lista de usuários');
+    }
 });
 
-// Middleware de erro
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Algo deu errado!');
+// Outras rotas do site
+app.get('/favoritos', (req, res) => {
+    res.render('favoritos');
+});
+
+app.get('/historico', (req, res) => {
+    res.render('historico');
 });
 
 // Servidor ouvindo na porta 3000

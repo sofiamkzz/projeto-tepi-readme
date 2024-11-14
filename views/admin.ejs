@@ -133,13 +133,12 @@
         }
     </style>
 </head>
-
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <div class="navbar-brand fw-bold text-dark-pink">
-                <img src="papelaria.jpg" alt="Logo Viva Colors" style="height: 50px;">
+                <img src="/images/logo.jpg" alt="Logo Viva Colors" style="height: 50px;">
                 Viva Colors
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -149,16 +148,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="minhaconta-admin.html">Minha Conta</a>
+                        <a class="nav-link active" href="conta-">Minha Conta</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historicocompras.html">Histórico de Pedidos</a>
+                        <a class="nav-link" href="historico">Histórico de Pedidos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Configurações</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Sair</a>
+                        <a class="nav-link" href="/logout">Sair</a>
                     </li>
                 </ul>
             </div>
@@ -196,11 +195,11 @@
                     <!-- Loop para exibir os usuários -->
                     <% usuarios.forEach(function(usuario) { %>
                         <tr>
-                            <td><%= usuario.nome %></td>
+                            <td><%= usuario.name %></td>
                             <td><%= usuario.email %></td>
                             <td>
                                 <button class="btn btn-warning">Atualizar</button>
-                                <button class="btn btn-danger">Remover</button>
+                                <a href="/delete/<%=usuario.id%>"><button class="btn btn-danger">Remover</button></a>
                             </td>
                         </tr>
                     <% }); %>

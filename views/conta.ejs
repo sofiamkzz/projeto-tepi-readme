@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,8 +43,8 @@
             flex-direction: column;
 
         }
-    
-        img{
+
+        img {
             border-radius: 25px;
         }
 
@@ -73,8 +74,8 @@
             background: linear-gradient(90deg, #e70a3a8f 20%, rgba(255, 255, 255, 0) 78%, rgba(209, 11, 54, 0.564) 100%);
         }
 
-        .navbar-brand{
-            color:  #ffffff !important;
+        .navbar-brand {
+            color: #ffffff !important;
             font-weight: bold;
         }
 
@@ -99,9 +100,9 @@
             flex: 1;
         }
 
-        footer { 
+        footer {
             background: #d42249;
-            background: linear-gradient(90deg, #e70a3a8f 28%, rgba(255,255,255,0) 48%, rgba(209, 11, 54, 0.564) 90%);
+            background: linear-gradient(90deg, #e70a3a8f 28%, rgba(255, 255, 255, 0) 48%, rgba(209, 11, 54, 0.564) 90%);
             height: 60px;
             width: 100%;
             position: relative;
@@ -109,12 +110,13 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <div class="navbar-brand fw-bold text-dark-pink">
-                <img src="papelaria.jpg" alt="Logo Luivin's" style="height: 50px;">
+                <img src="/images/logo.jpg" alt="Logo Viva Colors" style="height: 50px;">
                 Viva Colors
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -124,13 +126,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="minhaconta.html">Minha Conta</a>
+                        <a class="nav-link active" aria-current="page" href="conta">Minha Conta</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="historicocompras.html">Histórico de Pedidos</a>
+                        <a class="nav-link" href="/historico">Histórico de Pedidos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Configurações</a>
+                        <a class="nav-link" href="/carrinho">Carrinho</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/logout">Sair</a>
@@ -153,9 +155,40 @@
         <div class="user-info-panel text-center">
             <i class="fas fa-user-circle account-icon"></i>
             <h4>Dados Pessoais</h4>
-            <p>Nome: <%= nome %></p>
-            <p>Email: <%= email %></p>
-            <button class="btn edit-btn">Editar Dados</button>
+            <p>Nome: <%= user.name %>
+            </p>
+            <p>Email: <%= user.email %>
+            </p>
+            <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">Editar Dados</button>
+        </div>
+
+        <!-- Modal Editar Dados -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Editar Dados Pessoais</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/atualizar/:user.id" method="POST">
+                            <div class="mb-3">
+                                <label for="newName" class="form-label">Nome</label>
+                                <input type="text" class="form-control" name="newName" id="newName" value="<%= user.name %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newEmail" class="form-label">Email</label>
+                                <input type="text" class="form-control" name="newEmail" id="newEmail" value="<%= user.email %>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="newPassword" class="form-label">Nova senha</label>
+                                <input type="password" class="form-control" name="newPassword" id="newPassword" required>
+                            </div>
+                            <button type="submit" class="btn edit-btn">Salvar Alterações</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row g-4">
@@ -164,7 +197,7 @@
                     <i class="fas fa-heart account-icon"></i>
                     <h4>Meus Favoritos</h4>
                     <p>Você tem 4 produtos favoritos.</p>
-                    <a href="favoritos.html" class="btn edit-btn">Ver Favoritos</a>
+                    <a href="/favoritos" class="btn edit-btn">Ver Favoritos</a>
                 </div>
             </div>
             <div class="col-md-6">
@@ -172,7 +205,7 @@
                     <i class="fas fa-box account-icon"></i>
                     <h4>Histórico de Pedidos</h4>
                     <p>Você tem 3 pedidos realizados.</p>
-                    <a href="historico.html" class="btn edit-btn">Ver Pedidos</a>
+                    <a href="/historico" class="btn edit-btn">Ver Pedidos</a>
                 </div>
             </div>
         </div>
@@ -186,4 +219,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

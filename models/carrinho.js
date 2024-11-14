@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Product = require('./produto');  // Adjust the path based on your folder structure
 
 // Definição do modelo de Carrinho
 const Cart = sequelize.define('Cart', {
