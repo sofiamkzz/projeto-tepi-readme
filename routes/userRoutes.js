@@ -3,7 +3,7 @@ const { createUser, updateUser, deleteUserById } = require('../controllers/userC
 const router = express.Router();
 
 router.post('/cadastro', createUser);
-router.put('//atualizar/:id', updateUser);
+router.put('/atualizar/:id', updateUser);
 router.delete('/delete/:userId', deleteUserById);
 
 module.exports = router;
