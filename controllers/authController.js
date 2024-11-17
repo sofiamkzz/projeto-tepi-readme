@@ -11,14 +11,17 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const user = await User.findOne({ where: { email } });
-        if (!user) {
-            return res.render('login', { mensagem: 'Usuário não encontrado.' });
-        }
+        const user = await User.findOne({where: {email: email}});
 
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.render('login', { mensagem: 'Senha incorreta.' });
+        if (user) {
+            if (await bcrypt.compare(password, user.password)) {
+                const token = jwt.sign(user.email, process.env.SECRET);
+                req.session.userId = user.id;
+                res.render('conta', { user: user, token: token });
+            }
+        }
+        else {
+            return res.render('login', { mensagem: 'Usuário não encontrado.' });
         }
 
         req.session.userId = user.id;
