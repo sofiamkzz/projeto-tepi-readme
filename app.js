@@ -29,6 +29,10 @@ app.use(session({
     cookie: { secure: false } // Defina como true se estiver usando HTTPS
 }));
 
+sequelize.sync({ force: true }).then(() => {
+    console.log('Banco de dados sincronizado..');
+});
+
 // Rota principal (GET)
 app.get('/', (req, res) => {
     res.redirect('/login');
