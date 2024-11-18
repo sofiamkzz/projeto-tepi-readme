@@ -12,7 +12,6 @@ const User = sequelize.define('User', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-
   },
   email: {
     type: DataTypes.STRING,
@@ -23,6 +22,14 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  role: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'user',  // O valor padrão é 'user' para usuários comuns
+    validate: {
+      isIn: [['user', 'admin']]  // Apenas valores 'user' ou 'admin' são permitidos
+    }
+  }
 });
 
 // Hook para hash da senha antes de salvar o usuário no banco de dados
