@@ -25,9 +25,9 @@ const User = sequelize.define('User', {
   role: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'user',  // O valor padrão é 'user' para usuários comuns
+    defaultValue: 'user', 
     validate: {
-      isIn: [['user', 'admin']]  // Apenas valores 'user' ou 'admin' são permitidos
+      isIn: [['user', 'admin']]  
     }
   }
 });
