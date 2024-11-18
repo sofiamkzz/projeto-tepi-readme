@@ -1,12 +1,24 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+const Product = require('./produto');
 
-// Definição do modelo de Itens do Carrinho
+// Definição do modelo de ItemCarrinho
 const CartItem = sequelize.define('CartItem', {
-  quantity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
+    quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            min: 1, // A quantidade deve ser ao menos 1
+        },
+    },
+    price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
 });
+
+// Relacionamento com Produto e Carrinho
+CartItem.belongsTo(Product, { foreignKey: 'productId', onDelete: 'CASCADE' });
+Product.hasMany(CartItem, { foreignKey: 'productId' });
 
 module.exports = CartItem;
