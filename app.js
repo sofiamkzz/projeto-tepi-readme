@@ -10,9 +10,10 @@ const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes'); 
 const authRoutes = require('./routes/authRoutes'); 
 const cartRoutes = require('./routes/cartRoutes'); 
+const favoriteRoutes = require('./routes/favoritesRoutes');
 
 const authenticateToken = require('./middleware/auth');
-const isAdmin = require('./middleware/isAdmin'); // Middleware de Admin
+const isAdmin = require('./middleware/isAdmin'); 
 
 const app = express();
 const port = 3000;
@@ -65,10 +66,8 @@ app.get('/admin', isAdmin, async (req, res) => {
     }
 });
 
-// Outras rotas do site
-app.get('/favoritos', (req, res) => {
-    res.render('favoritos');
-});
+// Rota de favoritos
+app.use('/favoritos', authenticateToken, favoritesRoutes); 
 
 app.get('/historico', (req, res) => {
     res.render('historico');
