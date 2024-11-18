@@ -12,6 +12,7 @@ const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes'); 
 
 const authenticateToken = require('./middleware/auth');
+const isAdmin = require('./middleware/isAdmin'); // Middleware de Admin
 
 const app = express();
 const port = 3000;
@@ -24,14 +25,18 @@ app.set('view engine', 'ejs');
 
 // Middleware para sessões
 app.use(session({
-    secret: process.env.SESSION_SECRET || 'your_default_secret_key', // Use uma variável de ambiente
+    secret: process.env.SESSION_SECRET || 'your_default_secret_key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: {
+        secure: process.env.NODE_ENV === 'production', // Apenas em produção
+        httpOnly: true, // Protege contra XSS
+        maxAge: 3600000 // 1 hora de expiração
+    }
 }));
 
-// Sincronizando o banco de dados
-sequelize.sync({ force: true }).then(() => {
+// Sincronizando o banco de dados (sem force: true para evitar apagar dados)
+sequelize.sync({ alter: true }).then(() => {
     console.log('Banco de dados sincronizado..');
 });
 
@@ -43,16 +48,15 @@ app.get('/', (req, res) => {
 // Rota de Login e Logout
 app.use('/', authRoutes);
 
-// Rotas de Usuário
-app.use('/user', userRoutes);
+// Rotas de Usuário (Autenticadas)
+app.use('/user', authenticateToken, userRoutes);
 
-// Rotas de Carrinho
-app.use('/carrinho', cartRoutes);
+// Rotas de Carrinho (Autenticadas)
+app.use('/carrinho', authenticateToken, cartRoutes);
 
-// Rota de Admin (Protegida por Middleware de Admin, caso necessário)
+// Rota de Admin (Protegida por Middleware de Admin)
 app.get('/admin', isAdmin, async (req, res) => {
     try {
-        // Buscar todos os usuários no banco de dados
         const users = await User.findAll();
         res.render('admin', { usuarios: users || [] });
     } catch (error) {
