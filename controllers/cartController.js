@@ -5,7 +5,7 @@ const Product = require('../models/produto');
 const getCart = async (req, res) => {
     try {
         const userId = req.session.userId;
-
+        
         if (!userId) {
             return res.redirect('/login'); // Caso o usuário não esteja logado
         }
@@ -36,14 +36,28 @@ const addToCart = async (req, res) => {
         return res.redirect('/login');
     }
 
+    if (quantity <= 0) {
+        return res.redirect('/carrinho'); // Não permitir adicionar quantidade inválida
+    }
+
     try {
+        // Verificar se o produto existe
+        const product = await Product.findByPk(productId);
+        if (!product) {
+            return res.redirect('/carrinho'); // Produto não encontrado
+        }
+
+        // Verificar se há estoque suficiente
+        if (product.stock < quantity) {
+            return res.redirect('/carrinho'); // Não há estoque suficiente
+        }
+
         const existingItem = await CartItem.findOne({ where: { userId, productId } });
 
         if (existingItem) {
             existingItem.quantity += quantity;
             await existingItem.save();
         } else {
-            const product = await Product.findByPk(productId);
             await CartItem.create({
                 userId,
                 productId,
@@ -55,7 +69,7 @@ const addToCart = async (req, res) => {
         res.redirect('/carrinho');
     } catch (error) {
         console.error(error);
-        res.redirect('/carrinho');
+        res.render('carrinho', { mensagem: 'Erro ao adicionar item ao carrinho.' });
     }
 };
 
@@ -68,7 +82,7 @@ const removeFromCart = async (req, res) => {
         res.redirect('/carrinho');
     } catch (error) {
         console.error(error);
-        res.redirect('/carrinho');
+        res.render('carrinho', { mensagem: 'Erro ao remover item do carrinho.' });
     }
 };
 
