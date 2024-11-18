@@ -1,4 +1,3 @@
-// Carrega variáveis de ambiente do .env
 require('dotenv').config();
 
 const express = require('express');
@@ -6,9 +5,11 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
 
-const userRoutes = require('./routes/userRoutes'); // Importando rotas de usuário
-const authRoutes = require('./routes/authRoutes'); // Importando rotas de autenticação
-const cartRoutes = require('./routes/cartRoutes'); // Importando rotas de carrinho
+const sequelize = require('./config/database');
+
+const userRoutes = require('./routes/userRoutes'); 
+const authRoutes = require('./routes/authRoutes'); 
+const cartRoutes = require('./routes/cartRoutes'); 
 
 const authenticateToken = require('./middleware/auth');
 
@@ -29,6 +30,7 @@ app.use(session({
     cookie: { secure: true }
 }));
 
+// Sincronizando o banco de dados
 sequelize.sync({ force: true }).then(() => {
     console.log('Banco de dados sincronizado..');
 });
