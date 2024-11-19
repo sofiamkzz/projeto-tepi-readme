@@ -10,7 +10,11 @@ const sequelize = require('./config/database');
 const userRoutes = require('./routes/userRoutes'); 
 const authRoutes = require('./routes/authRoutes'); 
 const cartRoutes = require('./routes/cartRoutes'); 
-const favoriteRoutes = require('./routes/favoritesRoutes');
+const favoritesRoutes = require('./routes/favoritesRoutes');
+const User = require('./models/user');
+
+const { getLoginPage, loginUser, logoutUser } = require('./controllers/authController');
+const { createUser, updateUser, deleteUserById } = require('./controllers/userController');
 
 const authenticateToken = require('./middleware/auth');
 const isAdmin = require('./middleware/isAdmin'); 
@@ -37,26 +41,29 @@ app.use(session({
 }));
 
 // Sincronizando o banco de dados (sem force: true para evitar apagar dados)
-sequelize.sync({ alter: true }).then(() => {
+sequelize.sync({ alter: false }).then(() => {
     console.log('Banco de dados sincronizado..');
 });
 
-// Rota principal (GET)
-app.get('/', (req, res) => {
-    res.redirect('/login');
+app.get('/', getLoginPage);
+app.post('/login', loginUser);
+
+// Use userRoutes for all user-related paths, including /cadastro
+app.get('/cadastro', (req, res) => {
+    res.render('cadastro', { mensagem: '' }); 
 });
 
-// Rota de Login e Logout
-app.use('/', authRoutes);
-
-// Rotas de Usuário (Autenticadas)
-app.use('/user', authenticateToken, userRoutes);
+// Rota de cadastro (POST)
+app.post('/cadastro', createUser); 
 
 // Rotas de Carrinho (Autenticadas)
-app.use('/carrinho', authenticateToken, cartRoutes);
+app.get('/carrinho', authenticateToken, cartRoutes);
+
+app.post('/atualizar/:user.id', updateUser);
+app.get('/delete/:id', deleteUserById);
 
 // Rota de Admin (Protegida por Middleware de Admin)
-app.get('/admin', isAdmin, async (req, res) => {
+app.get('/admin', async (req, res) => {
     try {
         const users = await User.findAll();
         res.render('admin', { usuarios: users || [] });
@@ -67,11 +74,14 @@ app.get('/admin', isAdmin, async (req, res) => {
 });
 
 // Rota de favoritos
-app.use('/favoritos', authenticateToken, favoritesRoutes); 
+app.get('/favoritos', authenticateToken, favoritesRoutes); 
 
 app.get('/historico', (req, res) => {
     res.render('historico');
 });
+
+// Rota de Logout
+app.get('/logout', logoutUser);
 
 // Servidor ouvindo na porta 3000
 app.listen(port, () => {
