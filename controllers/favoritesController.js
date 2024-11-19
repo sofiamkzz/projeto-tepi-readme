@@ -49,7 +49,7 @@ const removeFavorite = async (req, res) => {
         // Remove o produto dos favoritos do usuário
         await user.removeProduct(product); // Usando o método removeProduct gerado pelo Sequelize
 
-        res.redirect('/favoritos');
+        res.status(200).json({ message: 'Produto removido dos favoritos!' });
     } catch (error) {
         console.error('Erro ao remover favorito:', error);
         res.status(500).send('Erro ao remover produto dos favoritos');
@@ -78,4 +78,10 @@ const getFavorites = async (req, res) => {
         console.error('Erro ao buscar favoritos:', error);
         res.status(500).send('Erro ao carregar produtos favoritos');
     }
+};
+
+module.exports = {
+    addFavorite,
+    removeFavorite,
+    getFavorites
 };
