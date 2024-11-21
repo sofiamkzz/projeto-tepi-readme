@@ -41,7 +41,6 @@
             color: var(--secondary-color);
             display: flex;
             flex-direction: column;
-
         }
 
         img {
@@ -152,6 +151,13 @@
 
     <!-- Painel de Conta -->
     <main class="container my-5">
+        <!-- Mensagem de sucesso/erro -->
+        <% if (mensagem) { %>
+            <div class="alert alert-info" role="alert">
+                <%= mensagem %>
+            </div>
+        <% } %>
+
         <div class="user-info-panel text-center">
             <i class="fas fa-user-circle account-icon"></i>
             <h4>Dados Pessoais</h4>
@@ -171,18 +177,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="/atualizar/:user.id" method="POST">
+                        <form action="/atualizar/<%= user.id %>" method="POST">
                             <div class="mb-3">
                                 <label for="newName" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="newName" id="newName" value="<%= user.name %>" required>
+                                <input type="text" class="form-control" name="newName" id="newName" value="<%= user.name %>">
                             </div>
                             <div class="mb-3">
                                 <label for="newEmail" class="form-label">Email</label>
-                                <input type="text" class="form-control" name="newEmail" id="newEmail" value="<%= user.email %>" required>
+                                <input type="text" class="form-control" name="newEmail" id="newEmail" value="<%= user.email %>">
                             </div>
                             <div class="mb-3">
                                 <label for="newPassword" class="form-label">Nova senha</label>
-                                <input type="password" class="form-control" name="newPassword" id="newPassword" required>
+                                <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Nova senha">
                             </div>
                             <button type="submit" class="btn edit-btn">Salvar Alterações</button>
                         </form>
