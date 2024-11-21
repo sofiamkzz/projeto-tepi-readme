@@ -14,6 +14,8 @@ const favoritesRoutes = require('./routes/favoritesRoutes');
 const User = require('./models/user');
 
 const { getLoginPage, loginUser, logoutUser } = require('./controllers/authController');
+const { getCart, addToCart, removeFromCart } = require('./controllers/cartController');
+const { addFavorite, removeFavorite, getFavorites } = require('./controllers/favoritesController');
 const { createUser, updateUser, deleteUserById } = require('./controllers/userController');
 
 const authenticateToken = require('./middleware/auth');
@@ -24,7 +26,7 @@ const port = 3000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
@@ -45,22 +47,29 @@ sequelize.sync({ alter: false }).then(() => {
     console.log('Banco de dados sincronizado..');
 });
 
+// ROTAS TEMPORÁRIAS
+
 app.get('/', getLoginPage);
 app.post('/login', loginUser);
+app.post('/atualizar/:id', updateUser);
+app.get('/delete/:id', deleteUserById);
 
-// Use userRoutes for all user-related paths, including /cadastro
 app.get('/cadastro', (req, res) => {
     res.render('cadastro', { mensagem: '' }); 
 });
-
-// Rota de cadastro (POST)
 app.post('/cadastro', createUser); 
 
-// Rotas de Carrinho (Autenticadas)
-app.get('/carrinho', authenticateToken, cartRoutes);
+app.get('/carrinho', getCart);
+app.post('/carrinho/adicionar/:id', addToCart);
 
-app.post('/atualizar/:user.id', updateUser);
-app.get('/delete/:id', deleteUserById);
+
+app.get('/favoritos', getFavorites); 
+app.get('/historico', (req, res) => {
+    res.render('historico');
+});
+
+// Rota de Logout
+app.get('/logout', logoutUser);
 
 // Rota de Admin (Protegida por Middleware de Admin)
 app.get('/admin', async (req, res) => {
@@ -72,16 +81,6 @@ app.get('/admin', async (req, res) => {
         res.status(500).send('Erro ao carregar a lista de usuários');
     }
 });
-
-// Rota de favoritos
-app.get('/favoritos', authenticateToken, favoritesRoutes); 
-
-app.get('/historico', (req, res) => {
-    res.render('historico');
-});
-
-// Rota de Logout
-app.get('/logout', logoutUser);
 
 // Servidor ouvindo na porta 3000
 app.listen(port, () => {
