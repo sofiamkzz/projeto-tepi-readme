@@ -1,87 +1,106 @@
-const Favorite = require('../models/favorites');
-const User = require('../models/user');
+const CartItem = require('../models/item-carrinho');
 const Product = require('../models/produto');
 
-// Adicionar produto aos favoritos
-const addFavorite = async (req, res) => {
-    const { productId } = req.body;
-    const userId = req.session.userId;
-
-    if (!userId) {
-        return res.redirect('/login');
-    }
-
+// Exibir o carrinho de compras
+const getCart = async (req, res) => {
     try {
-        const user = await User.findByPk(userId);
-        const product = await Product.findByPk(productId);
-
-        if (!user || !product) {
-            return res.status(404).send('Usuário ou produto não encontrado');
+        const userId = req.session.userId;
+        
+        if (!userId) {
+            return res.redirect('/login'); // Caso o usuário não esteja logado
         }
 
-        // Adiciona o produto aos favoritos do usuário
-        await user.addProduct(product); // Usando o método addProduct gerado pelo Sequelize
-
-        res.redirect('/favoritos');
-    } catch (error) {
-        console.error('Erro ao adicionar favorito:', error);
-        res.status(500).send('Erro ao adicionar produto aos favoritos');
-    }
-};
-
-// Remover produto dos favoritos
-const removeFavorite = async (req, res) => {
-    const { productId } = req.params;
-    const userId = req.session.userId;
-
-    if (!userId) {
-        return res.redirect('/login');
-    }
-
-    try {
-        const user = await User.findByPk(userId);
-        const product = await Product.findByPk(productId);
-
-        if (!user || !product) {
-            return res.status(404).send('Usuário ou produto não encontrado');
-        }
-
-        // Remove o produto dos favoritos do usuário
-        await user.removeProduct(product); // Usando o método removeProduct gerado pelo Sequelize
-
-        res.status(200).json({ message: 'Produto removido dos favoritos!' });
-    } catch (error) {
-        console.error('Erro ao remover favorito:', error);
-        res.status(500).send('Erro ao remover produto dos favoritos');
-    }
-};
-
-// Listar todos os produtos favoritos do usuário
-const getFavorites = async (req, res) => {
-    const userId = req.session.userId;
-
-    if (!userId) {
-        return res.redirect('/login');
-    }
-
-    try {
-        const user = await User.findByPk(userId, {
-            include: Product // Inclui os produtos favoritos
+        const cartItems = await CartItem.findAll({
+            where: { userId },
+            include: [Product] // Inclui os detalhes do produto
         });
 
-        if (!user) {
-            return res.status(404).send('Usuário não encontrado');
+        const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+
+        res.render('carrinho', {
+            cartItems,
+            total: total.toFixed(2)
+        });
+    } catch (error) {
+        console.error(error);
+        res.render('carrinho', { mensagem: 'Erro ao carregar o carrinho.' });
+    }
+};
+
+// Adicionar item ao carrinho
+const addToCart = async (req, res) => {
+    const { productId, quantity } = req.body;
+    const userId = req.session.userId;
+
+    if (!userId) {
+        return res.redirect('/login');
+    }
+
+    if (quantity <= 0) {
+        return res.redirect('/carrinho'); // Não permitir adicionar quantidade inválida
+    }
+
+    try {
+        // Verificar se o produto existe
+        const product = await Product.findByPk(productId);
+        if (!product) {
+            return res.redirect('/carrinho'); // Produto não encontrado
         }
 
-        res.render('favoritos', { user, favorites: user.Products });
+        // Verificar se há estoque suficiente
+        if (product.stock < quantity) {
+            return res.redirect('/carrinho'); // Não há estoque suficiente
+        }
+
+        const existingItem = await CartItem.findOne({ where: { userId, productId } });
+
+        if (existingItem) {
+            existingItem.quantity += quantity;
+            await existingItem.save();
+        } else {
+            await CartItem.create({
+                userId,
+                productId,
+                quantity,
+                price: product.price
+            });
+        }
+
+        // Recarregar os itens do carrinho após adicionar
+        const cartItems = await CartItem.findAll({
+            where: { userId },
+            include: [Product] // Inclui os detalhes do produto
+        });
+
+        const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+
+        // Renderizar novamente a view com os novos itens do carrinho
+        res.render('carrinho', {
+            cartItems,
+            total: total.toFixed(2)
+        });
+
     } catch (error) {
-        console.error('Erro ao buscar favoritos:', error);
-        res.status(500).send('Erro ao carregar produtos favoritos');
+        console.error(error);
+        res.render('carrinho', { mensagem: 'Erro ao adicionar item ao carrinho.' });
+    }
+};
+
+// Remover item do carrinho
+const removeFromCart = async (req, res) => {
+    const { cartItemId } = req.params;
+
+    try {
+        await CartItem.destroy({ where: { id: cartItemId } });
+        res.redirect('/carrinho');
+    } catch (error) {
+        console.error(error);
+        res.render('carrinho', { mensagem: 'Erro ao remover item do carrinho.' });
     }
 };
 
 module.exports = {
-    addFavorite,
-    removeFavorite,
-    getFavorites
+    getCart,
+    addToCart,
+    removeFromCart
 };
