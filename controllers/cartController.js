@@ -17,10 +17,7 @@ const getCart = async (req, res) => {
 
         const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
 
-        res.render('carrinho', {
-            cartItems,
-            total: total.toFixed(2)
-        });
+        res.render('carrinho', { cartItems, total: total.toFixed(2)});
     } catch (error) {
         console.error(error);
         res.render('carrinho', { mensagem: 'Erro ao carregar o carrinho.' });
@@ -66,7 +63,20 @@ const addToCart = async (req, res) => {
             });
         }
 
-        res.redirect('/carrinho');
+        // Recarregar os itens do carrinho após adicionar
+        const cartItems = await CartItem.findAll({
+            where: { userId },
+            include: [Product] // Inclui os detalhes do produto
+        });
+
+        const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
+
+        // Renderizar novamente a view com os novos itens do carrinho
+        res.render('carrinho', {
+            cartItems,
+            total: total.toFixed(2)
+        });
+
     } catch (error) {
         console.error(error);
         res.render('carrinho', { mensagem: 'Erro ao adicionar item ao carrinho.' });
