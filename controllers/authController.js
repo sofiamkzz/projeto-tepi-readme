@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const secret = process.env.SECRET;
 
 // Renderiza a página de login
 const getLoginPage = (req, res) => {
@@ -16,29 +17,36 @@ const loginUser = async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ where: { email: email } });
-
-        if (user) {
-            // Verifique o valor do hash armazenado no banco de dados
-            console.log(user);
-
-            // Verifique se a comparação está retornando o valor esperado
-            const isPasswordValid = await bcrypt.compare(password.trim(), user.password);
-
-            if (isPasswordValid) {
-                const token = jwt.sign({ userId: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
-                res.cookie('auth_token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 3600000 });
-                req.session.userId = user.id;
-                res.render('conta', { user: user, token: token});
-            } else {
-                return res.render('login', { mensagem: 'Senha incorreta.' });
-            }
-        } else {
-            return res.render('login', { mensagem: 'Email ou senha incorretos.' });
+        // Verifica se o usuário existe
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(401).render('login', { mensagem: 'Usuário ou senha incorretos.' });
         }
+
+        // Verifica a senha
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) {
+            return res.status(401).render('login', { mensagem: 'Usuário ou senha incorretos.' });
+        }
+
+        // Gera o token JWT
+        const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
+
+        // Define o cookie com o token (não envia resposta ainda)
+        res.cookie('token', token, {
+            httpOnly: true, // Protege contra ataques de XSS
+            maxAge: 3600000 // Expira em 1 hora
+        });
+
+        // Armazenar o ID do usuário na sessão
+        req.session.userId = user.id;
+
+        // Redirecionar para a página da conta ou uma página de sucesso
+        res.render('conta', { user: user, token: token, mensagem: req.query.mensagem || null });
     } catch (error) {
-        console.error('Erro no login:', error);
-        return res.render('login', { mensagem: 'Erro ao fazer login. Tente novamente mais tarde.' });
+        console.error('Erro ao realizar login:', error);
+        // Certifique-se de não enviar outra resposta aqui
+        return res.status(500).render('login', { mensagem: 'Erro interno no servidor.' });
     }
 };
 
