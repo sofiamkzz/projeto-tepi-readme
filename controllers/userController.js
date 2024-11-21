@@ -14,12 +14,11 @@ const createUser = async (req, res) => {
     try {
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
-            return res.render('cadastro', { mensagem: 'Usuário já existe com esse email.' });
+            return res.render('cadastro', { mensagem: 'Usuário já existe.' });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        await User.create({ name, email, password: hashedPassword });
+        await User.create({ name, email, password});
+        console.log(name, email, password)
 
         res.redirect('/');
     } catch (error) {
@@ -44,27 +43,26 @@ const updateUser = async (req, res) => {
         if (newEmail && newEmail !== user.email) {
             const existingEmailUser = await User.findOne({ where: { email: newEmail } });
             if (existingEmailUser) {
-                return res.render('conta', { mensagem: 'Este e-mail já está em uso.' });
+                return res.render('conta', { user: user, mensagem: 'Este e-mail já está em uso.' });
             }
             user.email = newEmail; // Atualizar o email se não houver conflitos
         }
 
         // Atualizar nome
-        user.name = newName;
+        if (newName) {
+            user.name = newName;
+        }
 
         // Verificar e atualizar a senha se necessário
         if (newPassword) {
-            if (newPassword.length < 6) {
-                return res.render('conta', { mensagem: 'A senha deve ter pelo menos 6 caracteres.' });
-            }
-            const hashedPassword = await bcrypt.hash(newPassword, 10); 
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
             user.password = hashedPassword;
         }
 
         // Salve as alterações no banco
         await user.save();
 
-        res.render('conta', {user: user, mensagem: 'Dados atualizados com sucesso!' });
+        res.render('conta', { user: user, mensagem: 'Dados atualizados com sucesso!' });
 
     } catch (error) {
         console.error(error);
