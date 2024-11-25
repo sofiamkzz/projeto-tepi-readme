@@ -4,6 +4,11 @@ const Product = require('./produto');
 
 // Definição do modelo de ItemCarrinho
 const CartItem = sequelize.define('CartItem', {
+    idCartItem: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
