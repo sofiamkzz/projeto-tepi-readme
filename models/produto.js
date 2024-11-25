@@ -4,6 +4,11 @@ const Category = require('./categoria');
 
 // Definição do modelo de Produto
 const Product = sequelize.define('Product', {
+    idProduct: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+    },
     name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -27,8 +32,8 @@ const Product = sequelize.define('Product', {
 });
 
 // Relacionamento com a Categoria
-Product.belongsTo(Category, { foreignKey: 'categoryId', onDelete: 'SET NULL' });
-Category.hasMany(Product, { foreignKey: 'categoryId' });
+Product.belongsTo(Category, { foreignKey: 'idCategory', onDelete: 'SET NULL' });
+Category.hasMany(Product, { foreignKey: 'idCategory' });
 
 // Hook para atualizar o estoque após a venda
 Product.afterUpdate(async (product, options) => {
