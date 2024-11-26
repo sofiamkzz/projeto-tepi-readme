@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -183,27 +182,35 @@
         <!-- Lista de Usuários -->
         <div class="user-list-panel">
             <h4>Usuários Registrados</h4>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Email</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Loop para exibir os usuários -->
-                    <% usuarios.forEach(function(usuario) { %>
+            <% if (usuarios.length> 0) { %>
+                <table class="table table-bordered">
+                    <thead>
                         <tr>
-                            <td><%= usuario.name %></td>
-                            <td><%= usuario.email %></td>
-                            <td>
-                                <a href="/delete/<%=usuario.id%>"><button class="btn btn-danger">Remover</button></a>
-                            </td>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Ações</th>
                         </tr>
-                    <% }); %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <% usuarios.forEach(function(usuario) { %>
+                            <tr>
+                                <td>
+                                    <%= usuario.name %>
+                                </td>
+                                <td>
+                                    <%= usuario.email %>
+                                </td>
+                                <td>
+                                    <a href="/delete/<%=usuario.id%>"><button
+                                            class="btn btn-danger">Remover</button></a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                   <p>Não há usuários cadastrados no momento.</p>
+            <% } %>
         </div>
     </main>
 
