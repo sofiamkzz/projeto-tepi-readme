@@ -25,6 +25,9 @@ const isAdmin = require('./middleware/isAdmin');
 const app = express();
 const port = 3000;
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./swagger-output.json');
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
