@@ -57,7 +57,7 @@ const removeFavorite = async (req, res) => {
 };
 
 // Listar todos os produtos favoritos do usuário
-const getFavorites = async (req, res) => {
+const getFavorites = async (req, res, token) => {
     const userId = req.session.userId;
 
     if (!userId) {
@@ -73,7 +73,7 @@ const getFavorites = async (req, res) => {
             return res.status(404).send('Usuário não encontrado');
         }
 
-        res.render('favoritos', { user, favorites: user.Products });
+        res.render('favoritos', { user, favorites: user.Products, token });
     } catch (error) {
         console.error('Erro ao buscar favoritos:', error);
         res.status(500).send('Erro ao carregar produtos favoritos');
