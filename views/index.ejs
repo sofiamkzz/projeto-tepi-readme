@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="bg-light-pink py-3">
@@ -36,12 +38,16 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="promocoes.html">Promoções</a></li>
-                    <li class="nav-item"><a class="nav-link" href="favoritos.html">Favoritos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="minhaconta.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="promocoes">Promoções</a></li>
+                    <li class="nav-item"><a class="nav-link" href="favoritos">Favoritos</a></li>
+                    <% if (user) { %>
+                        <li class="nav-item"><a class="nav-link" href="conta">Minha Conta</a></li>
+                    <% } else { %>
+                        <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
+                    <% } %>
                     <li class="nav-item cart-icon">
-                        <a class="nav-link" href="carrinho.html">
+                        <a class="nav-link" href="carrinho">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="badge bg-danger">0</span>
                         </a>
@@ -109,97 +115,26 @@
 
         <!-- Product Carousel Section -->
         <div class="row">
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/caneta_gel_0_5mm_molin_flowers_18905_1_76afef01e147364b2e08014134ad0ef2.jpg"
-                        class="card-img-top" alt="Caneta Gel 0.5mm Molin Flowers">
-                    <div class="card-body">
-                        <h5 class="card-title">Caneta Gel 0.5mm Molin Flowers</h5>
-                        <p class="card-text">R$ 24,50</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
+            <% if (products.length > 0) { %>
+                <% products.forEach(product => { %>
+                    <div class="col-md-4 col-lg-3 mb-4">
+                        <div class="card shadow-sm">
+                            <img src="<%= product.imageUrl %>" class="card-img-top" alt="<%= product.name %>">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= product.name %>
+                                </h5>
+                                <p class="card-text">R$ <%= product.price %></p>
+                                <p class="card-text">Quantidade: <%= product.stock %></p>
+                                <a href="/carrinho/adicionar/<%=product.id%>"><button class="btn btn-main">Comprar</button></a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/caderno_universitario_tilibra_connect_10_materias_bunnyfly_19875_1_294eccbadcf81f92597acc0957ea97a3.jpg"
-                        class="card-img-top" alt="Caderno Tilibra Connect 10 Matérias BunnyFly">
-                    <div class="card-body">
-                        <h5 class="card-title">Caderno Tilibra Connect 10 Matérias BunnyFly</h5>
-                        <p class="card-text">R$ 48,50</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/marca_texto_tris_holic_cute_com_carimbo_19829_1_6d0f3d7728c1834ae7b16e1aaa23d230.jpg"
-                        class="card-img-top" alt="Marca Texto Tris Holic Cute com Carimbo">
-                    <div class="card-body">
-                        <h5 class="card-title">Marca Texto Tris Holic Cute com Carimbo</h5>
-                        <p class="card-text">R$ 11,90</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://papelariaunicornio.com.br/cdn/shop/files/203492-1200-auto_11zon.jpg?v=1722342000&width=493"
-                        class="card-img-top" alt="Estojo - Kipling - 100 Pens Blush Metallic">
-                    <div class="card-body">
-                        <h5 class="card-title">Estojo - Kipling - 100 Pens Blush Metallic</h5>
-                        <p class="card-text">R$ 524,99</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://papelariaunicornio.com.br/cdn/shop/products/63f66d7b606df988f9c98e8d51633c9e.png?v=1700683994&width=493"
-                        class="card-img-top"
-                        alt="Lápis de Cor - Faber-Castell - EcoLápis Supersoft - 12 Cores Metálicas">
-                    <div class="card-body">
-                        <h5 class="card-title">Lápis de Cor - Faber-Castell - EcoLápis Supersoft - 12 Cores Metálicas
-                        </h5>
-                        <p class="card-text">R$ 47,49</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://papelariaunicornio.com.br/cdn/shop/files/32_1224efe5-63e4-4e99-9a8e-9546e1ef6f63.jpg?v=1727292317&width=493"
-                        class="card-img-top" alt="Lápis Preto HB - Molin - Flowers Select - Top">
-                    <div class="card-body">
-                        <h5 class="card-title">Lápis Preto HB - Molin - Flowers Select - Top</h5>
-                        <p class="card-text">R$ 11,99</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://papelariaunicornio.com.br/cdn/shop/products/e66560765d15cd5ac3384e8a4478105b.jpg?v=1718935869&width=493"
-                        class="card-img-top" alt="caderno Médio - Caderno Inteligente - BT House 80 Folhas 90g/m²">
-                    <div class="card-body">
-                        <h5 class="card-title">Caderno Médio - Caderno Inteligente - BT House 80 Folhas 90g/m²</h5>
-                        <p class="card-text">R$ 164,99</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 mb-4">
-                <div class="card shadow-sm">
-                    <img src="https://papelariaunicornio.com.br/cdn/shop/products/797d22baed6edba60b90881869083ed4.jpg?v=1700692484&width=493"
-                        class="card-img-top" alt="Mochila - BRW - Nylon">
-                    <div class="card-body">
-                        <h5 class="card-title">Mochila - BRW - Nylon</h5>
-                        <p class="card-text">R$ 282,99</p>
-                        <a href="carrinho.html" class="btn btn-main">Comprar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <% }); %>  
+            <% } else { %>
+                <p>Novos produtos em breve.</p>
+            <% } %>
+        </div>        
     </main>
 
     <footer class="bg-light-pink py-4">
@@ -210,4 +145,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
