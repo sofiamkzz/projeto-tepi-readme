@@ -5,7 +5,7 @@ const Product = require('../models/produto');
 const getCart = async (req, res) => {
     try {
         const userId = req.session.userId;
-        
+
         if (!userId) {
             return res.redirect('/login'); // Caso o usuário não esteja logado
         }
@@ -15,21 +15,17 @@ const getCart = async (req, res) => {
             include: [Product] // Inclui os detalhes do produto
         });
 
-        const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
-
-        res.render('carrinho', {
-            cartItems,
-            total: total.toFixed(2)
-        });
+        res.render('carrinho', { cartItems });
     } catch (error) {
         console.error(error);
-        res.render('carrinho', { mensagem: 'Erro ao carregar o carrinho.' });
+        res.render('carrinho', { mensagem: 'Erro ao carregar o carrinho.', cartItems: [] });
     }
 };
 
 // Adicionar item ao carrinho
 const addToCart = async (req, res) => {
-    const { productId, quantity } = req.body;
+    const productId = req.params.id;
+    const quantity = req.query.quantity || 1;
     const userId = req.session.userId;
 
     if (!userId) {
@@ -69,20 +65,17 @@ const addToCart = async (req, res) => {
         // Recarregar os itens do carrinho após adicionar
         const cartItems = await CartItem.findAll({
             where: { userId },
-            include: [Product] // Inclui os detalhes do produto
+            include: [Product]
         });
 
         const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
 
-        // Renderizar novamente a view com os novos itens do carrinho
-        res.render('carrinho', {
-            cartItems,
-            total: total.toFixed(2)
-        });
+        // Always pass cartItems and total
+        res.render('carrinho', { cartItems: cartItems || [], total: total.toFixed(2) });
 
     } catch (error) {
         console.error(error);
-        res.render('carrinho', { mensagem: 'Erro ao adicionar item ao carrinho.' });
+        res.render('carrinho', { mensagem: 'Erro ao adicionar item ao carrinho.', cartItems: [] });
     }
 };
 
