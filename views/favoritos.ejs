@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,105 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* O CSS permanece o mesmo */
+       /* Paleta de cores refinadas e elegantes */
+       :root {
+            --main-color: #d42249; /* Cor vibrante e sofisticada */
+            --accent-color: #ffccf9;
+            --secondary-color: #6a0572; /* Roxo sofisticado */
+            --light-color: #fff4f9;
+            --footer-background: #f8d7da;
+            --footer-text: #d6336c;
+        }
+
+        body {
+            background-color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
+        }
+
+        /* Cabeçalho com gradiente vibrante */
+        .bg-gradient {
+            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+        }
+
+        /* Estilo para o título h1 */
+        h1 {
+            color: #ff6f91; /* Nova cor vibrante para o título */
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Botões mais sofisticados com gradiente */
+        .btn-main {
+            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 30px;
+        }
+
+        .btn-main:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Cartões com design moderno e sombras suaves */
+        .favorite-card {
+            border-radius: 20px;
+            background-color: white;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .favorite-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Remover favorito com destaque */
+        .remove-favorite {
+            color: var(--main-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .remove-favorite:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Títulos elegantes */
+        h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Rodapé elegante */
+        footer {
+            background: #d42249;
+            background: linear-gradient(90deg, #e70a3a8f 0%, rgba(255,255,255,0) 48%, rgba(209, 11, 54, 0.564) 100%);
+        }
+
+        .navbar {
+            background: #d42249;
+            background: linear-gradient(90deg, #e70a3a8f 20%, rgba(255, 255, 255, 0) 78%, rgba(209, 11, 54, 0.564) 100%);
+        }
+
+        .navbar-brand{
+            color:  #ffffff !important;
+            font-weight: bold;
+        }
+        img{
+            border-radius: 25px;
+        }
+
+        /* Título do cabeçalho com nova cor */
+        .text-dark-pink {
+            color: #d42249;
+        }
     </style>
 </head>
 
@@ -90,11 +189,11 @@
     <script>
         // Função para remover do favoritos
         const removeFavoriteIcons = document.querySelectorAll('.remove-favorite');
-        
+
         removeFavoriteIcons.forEach(icon => {
             icon.addEventListener('click', async (event) => {
                 const productId = event.target.getAttribute('data-id');
-                
+
                 try {
                     const response = await fetch(`/favoritos/remover/${productId}`, {
                         method: 'POST',
@@ -120,4 +219,5 @@
     </script>
 
 </body>
+
 </html>
