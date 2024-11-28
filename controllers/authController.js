@@ -29,8 +29,8 @@ const loginUser = async (req, res) => {
             return res.status(401).render('login', { mensagem: 'Usuário ou senha incorretos.' });
         }
 
-        // Gera o token JWT
-        const token = jwt.sign({ userId: user.id }, secret, { expiresIn: '1h' });
+        const token = jwt.sign(user.id, secret);
+        console.log(token);
 
         // Define o cookie com o token (não envia resposta ainda)
         res.cookie('token', token, {
@@ -60,7 +60,7 @@ const logoutUser = (req, res) => {
 
         // Limpa o cookie HTTP-only
         res.clearCookie('auth_token');  // Cookie de autenticação
-        res.clearCookie('connect.sid'); // Caso você esteja usando o Express-session
+        res.clearCookie('connect.sid'); // Express-session
 
         // Redireciona para a página de login
         res.render('login', { mensagem: 'Usuário deslogado com sucesso!' });
