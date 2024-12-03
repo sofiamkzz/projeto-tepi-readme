@@ -9,9 +9,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
     <style>
-        .navbar-brand img {
+         .navbar-brand img {
             height: 50px;
             /* Ajuste a altura da imagem conforme necessário */
+        }
+
+
+        .remove-favorite {
+            font-size: 1.7rem;
+            padding: 20px;
+            position: absolute;
+            /* Posiciona o ícone de forma absoluta */
+            right: 10px;
+            /* Ajusta a distância da borda direita */
+            top: 75%;
+            /* Centraliza verticalmente */
+            transform: translateY(-50%);
+
+        }
+
+        .card-body {
+            position: relative; /* Faz com que o ícone seja posicionado em relação ao card */
         }
     </style>
 </head>
@@ -124,9 +142,10 @@
                                 <h5 class="card-title">
                                     <%= product.name %>
                                 </h5>
-                                <p class="card-text">R$ <%= product.price %></p>
+                                <p class="card-main">R$ <%= product.price.toFixed(2) %></p>
                                 <p class="card-text">Quantidade: <%= product.stock %></p>
-                                <a href="/carrinho/adicionar/<%=product.id%>"><button class="btn btn-main">Comprar</button></a>
+                                <a href="/carrinho/adicionar/<%=product.idProduct%>"><button class="btn btn-main">Comprar</button></a>
+                                <i class="far fa-heart remove-favorite" title="Remover dos Favoritos"></i>
                             </div>
                         </div>
                     </div>
