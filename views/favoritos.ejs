@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus Favoritos - Viva Colors</title>
+    <link rel="icon" href="/images/logo.jpg" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-       /* Paleta de cores refinadas e elegantes */
-       :root {
+        /* Paleta de cores refinadas e elegantes */
+        :root {
             --main-color: #d42249; /* Cor vibrante e sofisticada */
             --accent-color: #ffccf9;
             --secondary-color: #6a0572; /* Roxo sofisticado */
@@ -88,7 +88,7 @@
         footer {
             background: #d42249;
             background: linear-gradient(90deg, #e70a3a8f 0%, rgba(255,255,255,0) 48%, rgba(209, 11, 54, 0.564) 100%);
-        }
+ }
 
         .navbar {
             background: #d42249;
@@ -107,12 +107,47 @@
         .text-dark-pink {
             color: #d42249;
         }
+
     </style>
 </head>
-
 <body>
 
-    <!-- Header com gradiente rosa claro -->
+      <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <div class="navbar-brand fw-bold text-dark-pink">
+                <img src="/images/logo.jpg" alt="Logo Luivin's" style="height: 50px;">
+                Viva Colors
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Favoritos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="promocoes.html">Promoções</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="minhaconta.html">Minha conta</a>
+                    </li>
+                    <li class="nav-item cart-icon">
+                        <a class="nav-link" href="carrinho.html">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="badge bg-danger">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <header class="bg-light-pink py-3">
         <div class="container text-center">
             <h1 class="text-dark-pink fw-bold">Meus Favoritos</h1>
@@ -123,101 +158,41 @@
     <!-- Lista de Favoritos -->
     <main class="container my-5">
         <div class="row text-center g-4">
-            <!-- Produto Favorito 1 -->
-            <div class="col-md-4">
-                <div class="favorite-card shadow-sm">
-                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/caneta_gel_0_5mm_molin_flowers_18905_1_76afef01e147364b2e08014134ad0ef2.jpg"
-                        alt="Produto" class="img-fluid rounded">
-                    <h5 class="mt-3">Caneta Gel 0.5mm Molin</h5>
-                    <p class="text-main">R$ 24,50</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Link dinâmico para comprar -->
-                        <a href="/carrinho/adicionar/1" class="btn btn-main">Comprar</a>
-                        <!-- Botão de Remover Favorito -->
-                        <i class="fas fa-heart remove-favorite" data-id="1" title="Remover dos Favoritos"></i>
+            <% if (favoritos.length === 0) { %>
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        Não há itens favoritados no momento.
                     </div>
                 </div>
-            </div>
-
-            <!-- Produto Favorito 2 -->
-            <div class="col-md-4">
-                <div class="favorite-card shadow-sm">
-                    <img src="https://images.tcdn.com.br/img/img_prod/1106500/caderno_universitario_tilibra_connect_10_materias_bunnyfly_19875_1_294eccbadcf81f92597acc0957ea97a3.jpg"
-                        alt="Produto" class="img-fluid rounded">
-                    <h5 class="mt-3">Caderno Tilibra 10 Matérias</h5>
-                    <p class="text-main">R$ 48,50</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Link dinâmico para comprar -->
-                        <a href="/carrinho/adicionar/2" class="btn btn-main">Comprar</a>
-                        <!-- Botão de Remover Favorito -->
-                        <i class="fas fa-heart remove-favorite" data-id="2" title="Remover dos Favoritos"></i>
+            <% } else { %>
+                <% favoritos.forEach(favorito => { %>
+                    <div class="col-md-4">
+                        <div class="favorite-card shadow-sm">
+                            <img src="<%= favorito.image %>" alt="<%= favorito.nome %>" class="img-fluid rounded">
+                            <h5 class="mt-3"><%= favorito.nome %></h5>
+                            <p class="text-main">R$ <%= favorito.preco %></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                                <form action="/favoritos/remover/<%= favorito.id %>" method="POST" class="d-inline">
+                                    <input type="hidden" name="produtoId" value="<%= favorito.id %>">
+                                    <button type="submit" class="remove-favorite btn btn-link">
+                                        <i class="fas fa-heart"></i> Remover
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <!-- Produto Favorito 3 -->
-            <div class="col-md-4">
-                <div class="favorite-card shadow-sm">
-                    <img src="https://images.tcdn.com.br/img/img_prod/750218/papel_de_carta_universitario_dac_50_folhas_90g_disney_ursinho_pooh_10242_1_379e6796690549d7624b34d3a9fcd11c.jpg"
-                        alt="Produto" class="img-fluid rounded">
-                    <h5 class="mt-3">Papel de Carta universitário DAC 50 folhas 90g Disney Ursinho Pooh</h5>
-                    <p class="text-main">R$ 39,48</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Link dinâmico para comprar -->
-                        <a href="/carrinho/adicionar/3" class="btn btn-main">Comprar</a>
-                        <!-- Botão de Remover Favorito -->
-                        <i class="fas fa-heart remove-favorite" data-id="3" title="Remover dos Favoritos"></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Adicionar outros produtos aqui seguindo o mesmo padrão -->
-
+                <% }); %>
+            <% } %>
         </div>
-    </main>
+    </main>    
 
-    <!-- Rodapé elegante -->
-    <footer class="bg-light-pink py-4">
+    <footer class="bg-light py-4">
         <div class="container text-center">
-            <p class="text-dark-pink mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
+            <p class="mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Script para remover favorito -->
-    <script>
-        // Função para remover do favoritos
-        const removeFavoriteIcons = document.querySelectorAll('.remove-favorite');
-
-        removeFavoriteIcons.forEach(icon => {
-            icon.addEventListener('click', async (event) => {
-                const productId = event.target.getAttribute('data-id');
-
-                try {
-                    const response = await fetch(`/favoritos/remover/${productId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        // Remover o item da lista de favoritos na página
-                        event.target.closest('.col-md-4').remove();
-                        alert('Produto removido dos favoritos!');
-                    } else {
-                        alert('Erro ao remover produto dos favoritos!');
-                    }
-                } catch (error) {
-                    console.error('Erro na requisição de remover favorito:', error);
-                    alert('Erro ao tentar remover o favorito.');
-                }
-            });
-        });
-    </script>
-
 </body>
-
 </html>
