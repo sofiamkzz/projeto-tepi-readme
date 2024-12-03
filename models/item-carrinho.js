@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Product = require('./produto');
+const Product = require('./produto');  // Certifique-se de que o caminho está correto
+const User = require('./user');    // Certifique-se de que o caminho está correto
 
 // Definição do modelo de ItemCarrinho
 const CartItem = sequelize.define('CartItem', {
@@ -22,8 +23,11 @@ const CartItem = sequelize.define('CartItem', {
     },
 });
 
-// Relacionamento com Produto e Carrinho
+// Relacionamento com Produto
 CartItem.belongsTo(Product, { foreignKey: 'productId', onDelete: 'CASCADE' });
 Product.hasMany(CartItem, { foreignKey: 'productId' });
+
+// Relacionamento com User
+CartItem.belongsTo(User, { foreignKey: 'userId' });  // Relação com o User
 
 module.exports = CartItem;
