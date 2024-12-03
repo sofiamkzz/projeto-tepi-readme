@@ -24,36 +24,33 @@ const getCart = async (req, res) => {
 
 // Adicionar item ao carrinho
 const addToCart = async (req, res) => {
-    const productId = req.params.id;
-    const quantity = req.query.quantity || 1;
+    const productId = req.params.id;  // ID do produto vindo da URL
+    const quantity = 1;  // Definindo a quantidade padrão como 1
     const userId = req.session.userId;
 
     if (!userId) {
-        return res.redirect('/login');
-    }
-
-    if (quantity <= 0) {
-        return res.redirect('/carrinho'); // Não permitir adicionar quantidade inválida
+        return res.redirect('/login');  // Caso o usuário não esteja logado
     }
 
     try {
-        // Verificar se o produto existe
         const product = await Product.findByPk(productId);
         if (!product) {
-            return res.redirect('/carrinho'); // Produto não encontrado
+            return res.redirect('/carrinho');  // Produto não encontrado
         }
 
-        // Verificar se há estoque suficiente
         if (product.stock < quantity) {
-            return res.redirect('/carrinho'); // Não há estoque suficiente
+            return res.redirect('/carrinho?mensagem=Estoque insuficiente');  // Não há estoque suficiente
         }
 
+        // Verificar se o produto já está no carrinho
         const existingItem = await CartItem.findOne({ where: { userId, productId } });
 
         if (existingItem) {
+            // Se o item já está no carrinho, atualizamos a quantidade
             existingItem.quantity += quantity;
             await existingItem.save();
         } else {
+            // Caso contrário, criamos um novo item no carrinho
             await CartItem.create({
                 userId,
                 productId,
@@ -70,9 +67,8 @@ const addToCart = async (req, res) => {
 
         const total = cartItems.reduce((acc, item) => acc + (item.quantity * item.price), 0);
 
-        // Always pass cartItems and total
-        res.render('carrinho', { cartItems: cartItems || [], total: total.toFixed(2) });
-
+        // Renderizar novamente o carrinho
+        res.render('carrinho', { cartItems, total: total.toFixed(2) });
     } catch (error) {
         console.error(error);
         res.render('carrinho', { mensagem: 'Erro ao adicionar item ao carrinho.', cartItems: [] });
