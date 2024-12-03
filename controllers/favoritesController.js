@@ -4,8 +4,8 @@ const Product = require('../models/produto');
 
 // Adicionar produto aos favoritos
 const addFavorite = async (req, res) => {
-    const { productId } = req.body;
-    const userId = req.session.userId;
+    const { productId } = req.body;  // ID do produto que o usuário deseja favoritar
+    const userId = req.session.userId;  // ID do usuário
 
     if (!userId) {
         return res.redirect('/login');
@@ -31,8 +31,8 @@ const addFavorite = async (req, res) => {
 
 // Remover produto dos favoritos
 const removeFavorite = async (req, res) => {
-    const { productId } = req.params;
-    const userId = req.session.userId;
+    const { productId } = req.params;  // ID do produto a ser removido
+    const userId = req.session.userId;  // ID do usuário
 
     if (!userId) {
         return res.redirect('/login');
@@ -66,14 +66,15 @@ const getFavorites = async (req, res, token) => {
 
     try {
         const user = await User.findByPk(userId, {
-            include: Product // Inclui os produtos favoritos
+            include: Product, // Incluindo os produtos associados ao usuário
         });
 
         if (!user) {
             return res.status(404).send('Usuário não encontrado');
         }
 
-        res.render('favoritos', { user, favorites: user.Products, token });
+        // Envia os favoritos para a view
+        res.render('favoritos', { user, favoritos: user.Products, token });
     } catch (error) {
         console.error('Erro ao buscar favoritos:', error);
         res.status(500).send('Erro ao carregar produtos favoritos');
