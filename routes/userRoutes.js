@@ -11,9 +11,9 @@ router.get('/cadastro', (req, res) => {
 router.post('/cadastro', createUser);
 
 // Update user by ID (PUT)
-router.put('/atualizar/:id', updateUser);
+router.post('/atualizar/:id', updateUser);
 
 // Delete user by ID (DELETE)
-router.delete('/delete/:userId', deleteUserById);
+router.get('/deletar/:userId', deleteUserById);
 
 module.exports = router;
