@@ -7,26 +7,19 @@ const jwt = require('jsonwebtoken');
 
 const sequelize = require('./config/database');
 
-const userRoutes = require('./routes/userRoutes'); 
-const authRoutes = require('./routes/authRoutes'); 
-const cartRoutes = require('./routes/cartRoutes'); 
-const favoritesRoutes = require('./routes/favoritesRoutes');
+const userRoutes = require('./routes/userRoutes');  // Importa as rotas de usuário
+const authRoutes = require('./routes/authRoutes');  // Importa as rotas de autenticação
+const cartRoutes = require('./routes/cartRoutes');  // Importa as rotas de carrinho
+const favoritesRoutes = require('./routes/favoritesRoutes');  // Importa as rotas de favoritos
+
 const User = require('./models/user');
 const Product = require('./models/produto');
-
-const { getLoginPage, loginUser, logoutUser } = require('./controllers/authController');
-const { getCart, addToCart, removeFromCart } = require('./controllers/cartController');
-const { addFavorite, removeFavorite, getFavorites } = require('./controllers/favoritesController');
-const { createUser, updateUser, deleteUserById } = require('./controllers/userController');
 
 const authenticateToken = require('./middleware/auth');
 const isAdmin = require('./middleware/isAdmin'); 
 
 const app = express();
 const port = 3000;
-
-const swaggerUi = require('swagger-ui-express');
-const swaggerFile = require('./swagger-output.json');
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -46,15 +39,13 @@ app.use(session({
     }
 }));
 
-// Sincronizando o banco de dados (sem force: true para evitar apagar dados)
+sequelize.sync({ alter: true });  // Vai atualizar o banco conforme os modelos
+
 /*sequelize.sync({ alter: false }).then(() => {
     console.log('Banco de dados sincronizado..');
 });*/
 
-sequelize.sync({ force: true });
-
-// ROTAS TEMPORÁRIAS
-app.get('/login', getLoginPage);
+/*sequelize.sync({ force: true });*/
 
 app.get('/', async (req, res) => {
     try {
@@ -71,26 +62,11 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.post('/login', loginUser);
-app.post('/atualizar/:id', updateUser);
-app.get('/delete/:id', deleteUserById);
-
-app.get('/cadastro', (req, res) => {
-    res.render('cadastro', { mensagem: '' }); 
-});
-app.post('/cadastro', createUser); 
-
-app.get('/carrinho', getCart);
-app.get('/carrinho/adicionar/:id', getCart, addToCart);
-
-app.get('/favoritos', getFavorites); 
-
-app.get('/historico', (req, res) => {
-    res.render('historico');
-});
-
-// Rota de Logout
-app.get('/logout', logoutUser);
+// Definindo rotas específicas para as funcionalidades
+app.use(userRoutes);  // Integra as rotas de usuário (cadastro, atualização, deleção)
+app.use(authRoutes);  // Integra as rotas de autenticação (login, logout)
+app.use(cartRoutes);  // Integra as rotas de carrinho (adicionar, remover produtos)
+app.use(favoritesRoutes);  // Integra as rotas de favoritos (adicionar, remover favoritos)
 
 // Rota de Admin (Protegida por Middleware de Admin)
 app.get('/admin', async (req, res) => {
