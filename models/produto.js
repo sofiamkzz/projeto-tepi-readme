@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const Category = require('./categoria');
+const CartItem = require('./item-carrinho');
 
 // Definição do modelo de Produto
 const Product = sequelize.define('Product', {
@@ -33,6 +34,7 @@ const Product = sequelize.define('Product', {
 
 // Relacionamento com a Categoria
 Product.belongsTo(Category, { foreignKey: 'idCategory', onDelete: 'SET NULL' });
+Product.hasMany(CartItem, { foreignKey: 'productId' });
 Category.hasMany(Product, { foreignKey: 'idCategory' });
 
 // Hook para atualizar o estoque após a venda
