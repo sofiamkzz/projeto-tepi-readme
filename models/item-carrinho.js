@@ -21,13 +21,14 @@ const CartItem = sequelize.define('CartItem', {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
+    userId: { // A coluna 'userId' precisa ser definida aqui
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    productId: { // Certifique-se que a chave estrangeira de produto está definida corretamente
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 });
-
-// Relacionamento com Produto
-CartItem.belongsTo(Product, { foreignKey: 'productId', onDelete: 'CASCADE' });
-Product.hasMany(CartItem, { foreignKey: 'productId' });
-
-// Relacionamento com User
-CartItem.belongsTo(User, { foreignKey: 'userId' });  // Relação com o User
 
 module.exports = CartItem;
