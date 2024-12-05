@@ -18,9 +18,8 @@ const createUser = async (req, res) => {
         }
 
         await User.create({ name, email, password});
-        console.log(name, email, password)
 
-        res.redirect('/');
+        res.redirect('/login');
     } catch (error) {
         console.error('Erro ao inserir usuário:', error);
         res.render('cadastro', { mensagem: 'Erro ao cadastrar usuário.' });
