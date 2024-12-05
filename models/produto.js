@@ -32,11 +32,6 @@ const Product = sequelize.define('Product', {
     },
 });
 
-// Relacionamento com a Categoria
-Product.belongsTo(Category, { foreignKey: 'idCategory', onDelete: 'SET NULL' });
-Product.hasMany(CartItem, { foreignKey: 'productId' });
-Category.hasMany(Product, { foreignKey: 'idCategory' });
-
 // Hook para atualizar o estoque após a venda
 Product.afterUpdate(async (product, options) => {
     if (options.fields.includes('stock')) {
