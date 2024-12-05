@@ -39,7 +39,4 @@ User.beforeCreate(async (user, options) => {
     user.password = await bcrypt.hash(user.password, salt);
 });
 
-// Relacionamento: Um usuário pode ter vários itens no carrinho
-User.hasMany(CartItem, { foreignKey: 'userId' });
-
 module.exports = User;
