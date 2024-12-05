@@ -17,8 +17,4 @@ const Favorite = sequelize.define('Favorite', {
     }
 });
 
-// Relacionamentos
-User.belongsToMany(Product, { through: Favorite, foreignKey: 'userId' });
-Product.belongsToMany(User, { through: Favorite, foreignKey: 'productId' });
-
 module.exports = Favorite;
