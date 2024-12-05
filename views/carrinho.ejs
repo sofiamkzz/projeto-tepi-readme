@@ -162,25 +162,26 @@
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="<%= item.Product.image %>" alt="<%= item.Product.name %>"
+                                        <img src="<%= item.Product.imageUrl %>" alt="<%= item.Product.name %>"
                                             aria-label="<%= item.Product.name %>" style="width: 50px; height: auto;"
                                             class="me-3">
                                         <%= item.Product.name %>
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="number" class="form-control" value="<%= item.quantity %>" min="1" id="quantity-<%= item.id %>">                                  
+                                    <input type="number" class="form-control" value="<%= item.quantity %>" min="1"
+                                        id="quantity-<%= item.id %>">
                                 </td>
-                                <td id="price-<%= item.id %>">R$ <%= item.price.toFixed(2) %>
+                                <td id="price-<%= item.idCartItem %>">R$ <%= item.price.toFixed(2) %>
                                 </td>
                                 <td>
-                                    <a href="/remover-carrinho/<%= item.id %>" class="btn btn-danger"
-                                        onclick="return confirm('Você tem certeza que deseja remover este item?')">Remover</a>
+                                    <a href="/carrinho/remover/<%= item.idCartItem %>" class="btn btn-danger"
+                                        onclick="return confirm('Você tem certeza que deseja remover este item?')">Remover</a>                                    
                                 </td>
                             </tr>
                             <% }); %>
                                 <div class="text-end">
-                                    <h4 id="total">Total: R$ <%= total.toFixed(2) %>
+                                    <h4 id="total">Total: R$ <%= (Number(total) || 0).toFixed(2) %>
                                     </h4>
                                     <a href="#" class="btn btn-primary">Finalizar Compra</a>
                                 </div>
