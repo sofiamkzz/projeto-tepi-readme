@@ -16,7 +16,9 @@ const User = require('./models/user');
 const Product = require('./models/produto');
 
 const authenticateToken = require('./middleware/auth');
-const isAdmin = require('./middleware/isAdmin'); 
+const isAdmin = require('./middleware/isAdmin');
+
+const models = require('./models/relacoes');
 
 const app = express();
 const port = 3000;
@@ -29,7 +31,7 @@ app.set('view engine', 'ejs');
 
 // Middleware para sessões
 app.use(session({
-    secret:'secret_key',
+    secret: 'secret_key',
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -39,13 +41,13 @@ app.use(session({
     }
 }));
 
-sequelize.sync({ alter: true });  // Vai atualizar o banco conforme os modelos
-
-/*sequelize.sync({ alter: false }).then(() => {
-    console.log('Banco de dados sincronizado..');
-});*/
-
-/*sequelize.sync({ force: true });*/
+sequelize.sync({ alter: true }) //force
+    .then(() => {
+        console.log("Banco de dados sincronizado!");
+    })
+    .catch((error) => {
+        console.error("Erro ao sincronizar o banco de dados: ", error);
+    });
 
 app.get('/', async (req, res) => {
     try {
@@ -53,7 +55,7 @@ app.get('/', async (req, res) => {
         const products = await Product.findAll({});
 
         const user = req.user || "";
-        
+
         // Renderizando a página principal e passando os produtos como variável
         res.render('index', { user, products: products || [] });
     } catch (error) {
@@ -63,13 +65,13 @@ app.get('/', async (req, res) => {
 });
 
 // Definindo rotas específicas para as funcionalidades
-app.use(userRoutes);  // Integra as rotas de usuário (cadastro, atualização, deleção)
-app.use(authRoutes);  // Integra as rotas de autenticação (login, logout)
-app.use(cartRoutes);  // Integra as rotas de carrinho (adicionar, remover produtos)
-app.use(favoritesRoutes);  // Integra as rotas de favoritos (adicionar, remover favoritos)
+app.use(userRoutes);
+app.use(authRoutes);
+app.use(cartRoutes);
+app.use(favoritesRoutes);
 
 // Rota de Admin (Protegida por Middleware de Admin)
-app.get('/admin', async (req, res) => {
+app.get('/admin', isAdmin, async (req, res) => {
     try {
         const users = await User.findAll();
         res.render('admin', { usuarios: users || [] });
