@@ -1,9 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Category = require('./categoria');
-const CartItem = require('./item-carrinho');
 
-// Definição do modelo de Produto
 const Product = sequelize.define('Product', {
     idProduct: {
         type: DataTypes.INTEGER,
@@ -32,7 +29,6 @@ const Product = sequelize.define('Product', {
     },
 });
 
-// Hook para atualizar o estoque após a venda
 Product.afterUpdate(async (product, options) => {
     if (options.fields.includes('stock')) {
         const updatedProduct = await Product.findByPk(product.id);

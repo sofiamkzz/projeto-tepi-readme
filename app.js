@@ -3,22 +3,19 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const jwt = require('jsonwebtoken');
 
 const sequelize = require('./config/database');
 
-const userRoutes = require('./routes/userRoutes');  // Importa as rotas de usuário
-const authRoutes = require('./routes/authRoutes');  // Importa as rotas de autenticação
-const cartRoutes = require('./routes/cartRoutes');  // Importa as rotas de carrinho
-const favoritesRoutes = require('./routes/favoritesRoutes');  // Importa as rotas de favoritos
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/authRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+const favoritesRoutes = require('./routes/favoritesRoutes');
 
 const User = require('./models/user');
 const Product = require('./models/produto');
 
 const authenticateToken = require('./middleware/auth');
 const isAdmin = require('./middleware/isAdmin');
-
-const models = require('./models/relacoes');
 
 const app = express();
 const port = 3000;
@@ -29,19 +26,18 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
-// Middleware para sessões
 app.use(session({
     secret: 'secret_key',
     resave: false,
     saveUninitialized: true,
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // Apenas em produção
-        httpOnly: true, // Protege contra XSS
-        maxAge: 3600000 // 1 hora de expiração
+        secure: process.env.NODE_ENV === 'production',
+        httpOnly: true, 
+        maxAge: 3600000 
     }
 }));
 
-sequelize.sync({ alter: true }) //force
+sequelize.sync({ alter: true })
     .then(() => {
         console.log("Banco de dados sincronizado!");
     })
@@ -51,12 +47,10 @@ sequelize.sync({ alter: true }) //force
 
 app.get('/', async (req, res) => {
     try {
-        // Buscando os produtos do banco de dados
         const products = await Product.findAll({});
 
         const user = req.user || "";
 
-        // Renderizando a página principal e passando os produtos como variável
         res.render('index', { user, products: products || [] });
     } catch (error) {
         console.error("Erro ao buscar produtos:", error);
@@ -64,13 +58,13 @@ app.get('/', async (req, res) => {
     }
 });
 
-// Definindo rotas específicas para as funcionalidades
-app.use(userRoutes);
+app.use(userRoutes, authenticateToken);
 app.use(authRoutes);
-app.use(cartRoutes);
-app.use(favoritesRoutes);
+app.use(cartRoutes, authenticateToken);
+app.use(favoritesRoutes, authenticateToken);
 
-// Rota de Admin (Protegida por Middleware de Admin)
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 app.get('/admin', isAdmin, async (req, res) => {
     try {
         const users = await User.findAll();
@@ -81,7 +75,6 @@ app.get('/admin', isAdmin, async (req, res) => {
     }
 });
 
-// Servidor ouvindo na porta 3000
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
 });

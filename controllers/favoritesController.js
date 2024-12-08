@@ -2,10 +2,9 @@ const Favorite = require('../models/favorites');
 const User = require('../models/user');
 const Product = require('../models/produto');
 
-// Adicionar produto aos favoritos
 const addFavorite = async (req, res) => {
-    const { productId } = req.body;  // ID do produto que o usuário deseja favoritar
-    const userId = req.session.userId;  // ID do usuário
+    const { productId } = req.body;  
+    const userId = req.session.userId; 
 
     if (!userId) {
         return res.redirect('/login');
@@ -19,8 +18,7 @@ const addFavorite = async (req, res) => {
             return res.status(404).send('Usuário ou produto não encontrado');
         }
 
-        // Adiciona o produto aos favoritos do usuário
-        await user.addProduct(product); // Usando o método addProduct gerado pelo Sequelize
+        await user.addProduct(product);
 
         res.redirect('/favoritos');
     } catch (error) {
@@ -29,10 +27,9 @@ const addFavorite = async (req, res) => {
     }
 };
 
-// Remover produto dos favoritos
 const removeFavorite = async (req, res) => {
-    const { productId } = req.params;  // ID do produto a ser removido
-    const userId = req.session.userId;  // ID do usuário
+    const { productId } = req.params;
+    const userId = req.session.userId;
 
     if (!userId) {
         return res.redirect('/login');
@@ -46,8 +43,7 @@ const removeFavorite = async (req, res) => {
             return res.status(404).send('Usuário ou produto não encontrado');
         }
 
-        // Remove o produto dos favoritos do usuário
-        await user.removeProduct(product); // Usando o método removeProduct gerado pelo Sequelize
+        await user.removeProduct(product);
 
         res.status(200).json({ message: 'Produto removido dos favoritos!' });
     } catch (error) {
@@ -56,7 +52,6 @@ const removeFavorite = async (req, res) => {
     }
 };
 
-// Listar todos os produtos favoritos do usuário
 const getFavorites = async (req, res, token) => {
     const userId = req.session.userId;
 
@@ -66,14 +61,13 @@ const getFavorites = async (req, res, token) => {
 
     try {
         const user = await User.findByPk(userId, {
-            include: Product, // Incluindo os produtos associados ao usuário
+            include: Product,
         });
 
         if (!user) {
             return res.status(404).send('Usuário não encontrado');
         }
 
-        // Envia os favoritos para a view
         res.render('favoritos', { user, favoritos: user.Products, token });
     } catch (error) {
         console.error('Erro ao buscar favoritos:', error);

@@ -1,9 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Product = require('./produto');  // Certifique-se de que o caminho está correto
-const User = require('./user');    // Certifique-se de que o caminho está correto
+const Product = require('./produto'); 
+const User = require('./user');
 
-// Definição do modelo de ItemCarrinho
 const CartItem = sequelize.define('CartItem', {
     idCartItem: {
         type: DataTypes.INTEGER,
@@ -14,18 +13,18 @@ const CartItem = sequelize.define('CartItem', {
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-            min: 1, // A quantidade deve ser ao menos 1
+            min: 1,
         },
     },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    userId: { // A coluna 'userId' precisa ser definida aqui
+    userId: { 
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    productId: { // Certifique-se que a chave estrangeira de produto está definida corretamente
+    productId: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

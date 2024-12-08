@@ -1,9 +1,7 @@
 const { DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/database');
-const CartItem = require('./item-carrinho');  // Verifique o caminho aqui
 
-// Definição do modelo de usuário
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -33,7 +31,6 @@ const User = sequelize.define('User', {
     }
 });
 
-// Hook para hash da senha antes de salvar o usuário no banco de dados
 User.beforeCreate(async (user, options) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);

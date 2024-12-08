@@ -6,12 +6,12 @@ const doc = {
     description: 'Documentação gerada automaticamente',
   },
   host: 'localhost:3000',
-  schemes: ['http'], // Alterar para 'https' em produção
+  schemes: ['http'],
 };
 
-const outputFile = './swagger-output.json'; // Arquivo gerado
-const endpointsFiles = ['./app.js']; // Arquivo(s) onde as rotas estão definidas
+const outputFile = './swagger-output.json'; 
+const endpointsFiles = ['./app.js']; 
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  require('./app.js'); // Inicia o servidor após a documentação ser gerada
+  require('./app.js');
 });

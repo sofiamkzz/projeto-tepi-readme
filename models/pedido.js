@@ -1,8 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./user');
 
-// Definição do modelo de Pedido
 const Order = sequelize.define('Order', {
   idOrder: {
     type: DataTypes.INTEGER,
@@ -12,16 +10,11 @@ const Order = sequelize.define('Order', {
   status: {
     type: DataTypes.STRING,
     allowNull: false,
-    defaultValue: 'Pendente', // Ex: Pendente, Enviado, Concluído, etc.
+    defaultValue: 'Pendente', 
   },
   totalAmount: {
     type: DataTypes.FLOAT,
     allowNull: false,
-  },
-  createdAt: {
-    type: DataTypes.DATE,
-    allowNull: false,
-    defaultValue: DataTypes.NOW,
   },
 });
 

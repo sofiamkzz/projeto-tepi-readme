@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-// Definição do modelo de Categoria
 const Category = sequelize.define('Category', {
   idCategory: {
     type: DataTypes.INTEGER,

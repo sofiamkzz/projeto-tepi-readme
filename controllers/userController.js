@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const User = require('../models/user');
 
-// Criar usuário
 const createUser = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -26,39 +25,33 @@ const createUser = async (req, res) => {
     }
 };
 
-// Atualizar dados do usuário
 const updateUser = async (req, res) => {
     const { newName, newEmail, newPassword } = req.body;
 
     try {
-        // Verifique se o usuário existe
         const user = await User.findByPk(req.session.userId);
 
         if (!user) {
             return res.status(404).send('Usuário não encontrado.');
         }
 
-        // Verifique se o novo e-mail já está em uso
         if (newEmail && newEmail !== user.email) {
             const existingEmailUser = await User.findOne({ where: { email: newEmail } });
             if (existingEmailUser) {
                 return res.render('conta', { user: user, mensagem: 'Este e-mail já está em uso.' });
             }
-            user.email = newEmail; // Atualizar o email se não houver conflitos
+            user.email = newEmail;
         }
 
-        // Atualizar nome
         if (newName) {
             user.name = newName;
         }
 
-        // Verificar e atualizar a senha se necessário
         if (newPassword) {
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             user.password = hashedPassword;
         }
 
-        // Salve as alterações no banco
         await user.save();
 
         res.render('conta', { user: user, mensagem: 'Dados atualizados com sucesso!' });
@@ -69,7 +62,6 @@ const updateUser = async (req, res) => {
     }
 };
 
-// Função para deletar um usuário pelo ID
 const deleteUserById = async (req, res) => {
     const { id } = req.params;
 

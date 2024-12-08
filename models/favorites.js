@@ -3,7 +3,6 @@ const sequelize = require('../config/database');
 const User = require('./user');
 const Product = require('./produto');
 
-// Definição do modelo de Favorito
 const Favorite = sequelize.define('Favorite', {
     idFavorite: {
         type: DataTypes.INTEGER,

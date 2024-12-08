@@ -3,7 +3,6 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET;
 
-// Middleware de autenticação
 const authenticateToken = (req, res, next) => {
     const token = req.headers['authorization'];
 
