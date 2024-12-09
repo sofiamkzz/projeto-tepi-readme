@@ -11,11 +11,9 @@ const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const favoritesRoutes = require('./routes/favoritesRoutes');
 
-const User = require('./models/user');
 const Product = require('./models/produto');
 
 const authenticateToken = require('./middleware/auth');
-const isAdmin = require('./middleware/isAdmin');
 
 const app = express();
 const port = 3000;
@@ -58,22 +56,10 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.use(userRoutes, authenticateToken);
+app.use(userRoutes);
 app.use(authRoutes);
-app.use(cartRoutes, authenticateToken);
-app.use(favoritesRoutes, authenticateToken);
-
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
-app.get('/admin', isAdmin, async (req, res) => {
-    try {
-        const users = await User.findAll();
-        res.render('admin', { usuarios: users || [] });
-    } catch (error) {
-        console.error('Erro ao buscar usuários:', error);
-        res.status(500).send('Erro ao carregar a lista de usuários');
-    }
-});
+app.use(cartRoutes);
+app.use(favoritesRoutes);
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
