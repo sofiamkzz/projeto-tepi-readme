@@ -55,7 +55,6 @@ const updateUser = async (req, res) => {
         await user.save();
 
         res.render('conta', { user: user, mensagem: 'Dados atualizados com sucesso!' });
-
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Erro ao atualizar os dados.' });
@@ -64,18 +63,26 @@ const updateUser = async (req, res) => {
 
 const deleteUserById = async (req, res) => {
     const { id } = req.params;
+    console.log(id);
 
     try {
         const user = await User.findByPk(id);
+        console.log(id);
 
         if (!user) {
             return res.status(404).send('Usuário não encontrado.');
         }
 
+        if (user.role === 'admin') {
+            console.log('Não é possível deletar um usuário administrador!');
+            return;
+        }
+
         await user.destroy();
         console.log(`Usuário com ID ${id} deletado com sucesso.`);
 
-        res.redirect('/admin'); 
+        const users = await User.findAll(); 
+        return res.render('admin', { usuarios: users || [] });
     } catch (error) {
         console.error('Erro ao deletar usuário:', error);
         res.status(500).send('Erro ao tentar excluir o usuário.');
