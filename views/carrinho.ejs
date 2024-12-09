@@ -129,10 +129,10 @@
                             </span>
                         </a>
                     </li>
-                    <li class="nav-item"><a class="nav-link" href="index.html">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="promocoes.html">Promoções</a></li>
-                    <li class="nav-item"><a class="nav-link" href="favoritos.html">Favoritos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="minhaconta.html">Minha Conta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/carrinho">Carrinho</a></li>
+                    <li class="nav-item"><a class="nav-link" href="favoritos">Favoritos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/logout">Sair</a></li>
                 </ul>
             </div>
         </div>
@@ -151,7 +151,7 @@
                 </tr>
             </thead>
             <tbody>
-                <% if (cartItems && cartItems.length===0) { %>
+                <% if (cartItems && cartItems.length === 0) { %>
                     <tr>
                         <td colspan="4" class="text-center">Seu carrinho está vazio.</td>
                     </tr>
