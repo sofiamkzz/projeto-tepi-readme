@@ -18,8 +18,12 @@ const addFavorite = async (req, res) => {
             return res.status(404).send('Usuário ou produto não encontrado');
         }
 
-        await user.addProduct(product);
+        const isFavorite = await user.hasProduct(product); // Verificar se já está favoritado
+        if (isFavorite) {
+            return res.status(400).send('Produto já está nos seus favoritos');
+        }
 
+        await user.addProduct(product); // Adicionando o produto aos favoritos
         res.redirect('/favoritos');
     } catch (error) {
         console.error('Erro ao adicionar favorito:', error);
@@ -43,8 +47,12 @@ const removeFavorite = async (req, res) => {
             return res.status(404).send('Usuário ou produto não encontrado');
         }
 
-        await user.removeProduct(product);
+        const isFavorite = await user.hasProduct(product); // Verificar se está favoritado
+        if (!isFavorite) {
+            return res.status(400).send('Produto não está nos seus favoritos');
+        }
 
+        await user.removeProduct(product); // Removendo o produto dos favoritos
         res.status(200).json({ message: 'Produto removido dos favoritos!' });
     } catch (error) {
         console.error('Erro ao remover favorito:', error);
@@ -61,7 +69,11 @@ const getFavorites = async (req, res, token) => {
 
     try {
         const user = await User.findByPk(userId, {
-            include: Product,
+            include: {
+                model: Product,
+                attributes: ['id', 'name', 'price', 'image'], // Exemplo de carregar apenas os dados necessários
+                through: { attributes: [] } // Não carregar dados da tabela intermediária
+            },
         });
 
         if (!user) {
