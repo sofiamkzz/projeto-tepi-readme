@@ -10,6 +10,6 @@ router.post('/cadastro', createUser);
 
 router.post('/atualizar/:id', updateUser);
 
-router.get('/deletar/:userId', deleteUserById);
+router.get('/deletar/:id', deleteUserById);
 
 module.exports = router;
