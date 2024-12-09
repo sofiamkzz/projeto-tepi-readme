@@ -25,16 +25,27 @@ const loginUser = async (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
-        console.log(token);
 
         res.cookie('token', token, {
-            httpOnly: true, 
-            maxAge: 3600000 
+            httpOnly: true,
+            maxAge: 3600000,  // 1 hora
         });
 
         req.session.userId = user.id;
+        req.session.userRole = user.role;  
 
-        res.render('conta', { user: user, token: token, mensagem: req.query.mensagem || null });
+        if (user.role === 'admin') {
+            try {
+                const users = await User.findAll();  
+                return res.render('admin', { usuarios: users || [] });
+            } catch (error) {
+                console.error('Erro ao buscar usuários:', error);
+                return res.status(500).send('Erro ao carregar a lista de usuários');
+            }
+        }
+
+        return res.render('conta', { user: user, token: token, mensagem: req.query.mensagem || null });
+
     } catch (error) {
         console.error('Erro ao realizar login:', error);
         return res.status(500).render('login', { mensagem: 'Erro interno no servidor.' });
@@ -48,7 +59,7 @@ const logoutUser = (req, res) => {
             return res.redirect('/');
         }
 
-        res.clearCookie('auth_token');  
+        res.clearCookie('token');  
         res.clearCookie('connect.sid');
 
         res.render('login', { mensagem: 'Usuário deslogado com sucesso!' });
