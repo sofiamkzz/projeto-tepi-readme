@@ -11,7 +11,7 @@ const Category = sequelize.define('Category', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,  // A categoria precisa ser única
+    unique: true,
   },
   description: {
     type: DataTypes.TEXT,
@@ -19,17 +19,14 @@ const Category = sequelize.define('Category', {
   },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   }
 }, {
   timestamps: true,
 });
-
-Category.hasMany(Product, { foreignKey: 'categoryId' });
-Product.belongsTo(Category, { foreignKey: 'categoryId' });
 
 module.exports = Category;
