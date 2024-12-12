@@ -5,7 +5,7 @@ const User = require('../models/user');
 const createUser = async (req, res) => {
     const { name, email, password, phoneNumber } = req.body;
 
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    /*const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
         return res.render('cadastro', { mensagem: 'E-mail inválido.' });
     }
@@ -14,6 +14,7 @@ const createUser = async (req, res) => {
     if (phoneNumber && !phoneRegex.test(phoneNumber)) {
         return res.render('cadastro', { mensagem: 'Número de telefone inválido.' });
     }
+    */
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
