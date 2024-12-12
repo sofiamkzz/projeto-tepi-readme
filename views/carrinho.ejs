@@ -130,7 +130,6 @@
                         </a>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="carrinho">Carrinho</a></li>
                     <li class="nav-item"><a class="nav-link" href="favoritos">Favoritos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Sair</a></li>
                 </ul>
@@ -170,10 +169,10 @@
                                     <input type="number" class="form-control" value="<%= item.quantity %>" min="1"
                                         id="quantity-<%= item.id %>">
                                 </td>
-                                <td id="price-<%= item.idCartItem %>">R$ <%= item.price.toFixed(2) %>
+                                <td id="price-<%= item.idCartItem %>">R$ <%= item.Product.price %>
                                 </td>
                                 <td>
-                                    <a href="/carrinho/remover/<%= item.idCartItem %>" class="btn btn-danger"
+                                    <a href="/carrinho/remover/<%= item.id %>" class="btn btn-danger"
                                         onclick="return confirm('Você tem certeza que deseja remover este item?')">Remover</a>                                    
                                 </td>
                             </tr>
