@@ -140,9 +140,9 @@
                                 <h5 class="card-title">
                                     <%= product.name %>
                                 </h5>
-                                <p class="card-main">R$ <%= product.price.toFixed(2) %></p>
+                                <p class="card-main">R$ <%= product.price %></p>
                                 <p class="card-text">Quantidade: <%= product.stock %></p>
-                                <a href="/carrinho/adicionar/<%=product.idProduct%>"><button class="btn btn-main">Comprar</button></a>
+                                <a href="/carrinho/adicionar/<%=product.id%>"><button class="btn btn-main">Comprar</button></a>
                                 <i class="far fa-heart remove-favorite" title="Remover dos Favoritos"></i>
                             </div>
                         </div>
