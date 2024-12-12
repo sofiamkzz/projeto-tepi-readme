@@ -1,6 +1,6 @@
-const Favorite = require('../models/favorites');
+const Favorite = require('../models/favorite');
 const User = require('../models/user');
-const Product = require('../models/produto');
+const Product = require('../models/product');
 
 const addFavorite = async (req, res) => {
     const { productId } = req.body;  
@@ -18,12 +18,12 @@ const addFavorite = async (req, res) => {
             return res.status(404).send('Usuário ou produto não encontrado');
         }
 
-        const isFavorite = await user.hasProduct(product); // Verificar se já está favoritado
+        const isFavorite = await user.hasProduct(product);
         if (isFavorite) {
             return res.status(400).send('Produto já está nos seus favoritos');
         }
 
-        await user.addProduct(product); // Adicionando o produto aos favoritos
+        await user.addProduct(product);
         res.redirect('/favoritos');
     } catch (error) {
         console.error('Erro ao adicionar favorito:', error);
