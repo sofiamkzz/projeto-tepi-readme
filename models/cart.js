@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const User = require('./user'); 
+const CartItem = require('./cartItem'); 
 
 const Cart = sequelize.define('Cart', {
   id: {
@@ -8,25 +9,14 @@ const Cart = sequelize.define('Cart', {
     primaryKey: true,
     autoIncrement: true,
   },
-  userId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User,
-      key: 'id',
-    },
-    allowNull: false,
-  },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   }
 });
-
-Cart.belongsTo(User, { foreignKey: 'userId' }); 
-Cart.hasMany(CartItem, { foreignKey: 'cartId' });
 
 module.exports = Cart;
