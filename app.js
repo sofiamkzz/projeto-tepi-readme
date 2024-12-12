@@ -36,7 +36,7 @@ app.use(session({
     }
 }));
 
-sequelize.sync({ force: true })
+sequelize.sync({ alter: true })
     .then(() => {
         console.log("Banco de dados sincronizado!");
     })
@@ -61,6 +61,10 @@ app.use(userRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(favoritesRoutes);
+
+app.get('/promocoes', async (req, res) => {
+    res.render('promotions');
+});
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
