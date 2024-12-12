@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./user'); 
-const Order = require('./order'); 
 
 const Donation = sequelize.define('Donation', {
   id: {
@@ -23,15 +21,12 @@ const Donation = sequelize.define('Donation', {
   },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   }
 });
-
-Donation.belongsTo(User, { foreignKey: 'userId' }); 
-Donation.belongsTo(Order, { foreignKey: 'orderId' }); 
 
 module.exports = Donation;
