@@ -1,4 +1,5 @@
 require('dotenv').config();
+require('./models/relations');
 
 const express = require('express');
 const session = require('express-session');
@@ -11,7 +12,7 @@ const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const favoritesRoutes = require('./routes/favoritesRoutes');
 
-const Product = require('./models/produto');
+const Product = require('./models/product');
 
 const authenticateToken = require('./middleware/auth');
 
@@ -35,7 +36,7 @@ app.use(session({
     }
 }));
 
-sequelize.sync({ alter: true })
+sequelize.sync({ force: true })
     .then(() => {
         console.log("Banco de dados sincronizado!");
     })
