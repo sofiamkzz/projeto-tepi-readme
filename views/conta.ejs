@@ -40,9 +40,10 @@
             color: var(--secondary-color);
             display: flex;
             flex-direction: column;
-        }
 
-        img {
+        }
+    
+        img{
             border-radius: 25px;
         }
 
@@ -72,14 +73,12 @@
             background: linear-gradient(90deg, #e70a3a8f 20%, rgba(255, 255, 255, 0) 78%, rgba(209, 11, 54, 0.564) 100%);
         }
 
-        .navbar-brand {
-            color: #ffffff !important;
+        .navbar-brand{
+            color:  #ffffff !important;
             font-weight: bold;
         }
 
-        .nav-link {
-            color: var(--secondary-color) !important;
-        }
+       
 
         h1 {
             color: var(--main-color);
@@ -98,9 +97,9 @@
             flex: 1;
         }
 
-        footer {
+        footer { 
             background: #d42249;
-            background: linear-gradient(90deg, #e70a3a8f 28%, rgba(255, 255, 255, 0) 48%, rgba(209, 11, 54, 0.564) 90%);
+            background: linear-gradient(90deg, #e70a3a8f 28%, rgba(255,255,255,0) 48%, rgba(209, 11, 54, 0.564) 90%);
             height: 60px;
             width: 100%;
             position: relative;
@@ -154,65 +153,71 @@
             <div class="alert alert-info" role="alert">
                 <%= mensagem %>
             </div>
-        <% } %>
+            <% } %>
 
-        <div class="user-info-panel text-center">
-            <i class="fas fa-user-circle account-icon"></i>
-            <h4>Dados Pessoais</h4>
-            <p>Nome: <%= user.name %>
-            </p>
-            <p>Email: <%= user.email %>
-            </p>
-            <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">Editar Dados</button>
-        </div>
+                <div class="user-info-panel text-center">
+                    <i class="fas fa-user-circle account-icon"></i>
+                    <h4>Dados Pessoais</h4>
+                    <p>Nome: <%= user.name %>
+                    </p>
+                    <p>Email: <%= user.email %>
+                    </p>
+                    <button class="btn edit-btn" data-bs-toggle="modal" data-bs-target="#editModal">Editar
+                        Dados</button>
+                </div>
 
-        <!-- Modal Editar Dados -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Editar Dados Pessoais</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- Modal Editar Dados -->
+                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Editar Dados Pessoais</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/atualizar/<%= user.id %>" method="POST">
+                                    <div class="mb-3">
+                                        <label for="newName" class="form-label">Nome</label>
+                                        <input type="text" class="form-control" name="newName" id="newName"
+                                            value="<%= user.name %>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newEmail" class="form-label">Email</label>
+                                        <input type="text" class="form-control" name="newEmail" id="newEmail"
+                                            value="<%= user.email %>">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label">Nova senha</label>
+                                        <input type="password" class="form-control" name="newPassword" id="newPassword"
+                                            placeholder="Nova senha">
+                                    </div>
+                                    <button type="submit" class="btn edit-btn">Salvar Alterações</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <form action="/atualizar/<%= user.id %>" method="POST">
-                            <div class="mb-3">
-                                <label for="newName" class="form-label">Nome</label>
-                                <input type="text" class="form-control" name="newName" id="newName" value="<%= user.name %>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newEmail" class="form-label">Email</label>
-                                <input type="text" class="form-control" name="newEmail" id="newEmail" value="<%= user.email %>">
-                            </div>
-                            <div class="mb-3">
-                                <label for="newPassword" class="form-label">Nova senha</label>
-                                <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Nova senha">
-                            </div>
-                            <button type="submit" class="btn edit-btn">Salvar Alterações</button>
-                        </form>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="account-panel text-center p-4">
+                            <i class="fas fa-heart account-icon"></i>
+                            <h4>Meus Favoritos</h4>
+                            <p>Você tem 4 produtos favoritos.</p>
+                            <a href="/favoritos" class="btn edit-btn">Ver Favoritos</a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="account-panel text-center p-4">
+                            <i class="fas fa-box account-icon"></i>
+                            <h4>Histórico de Pedidos</h4>
+                            <p>Você tem 3 pedidos realizados.</p>
+                            <a href="/historico" class="btn edit-btn">Ver Pedidos</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-md-6">
-                <div class="account-panel text-center p-4">
-                    <i class="fas fa-heart account-icon"></i>
-                    <h4>Meus Favoritos</h4>
-                    <p>Você tem 4 produtos favoritos.</p>
-                    <a href="/favoritos" class="btn edit-btn">Ver Favoritos</a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="account-panel text-center p-4">
-                    <i class="fas fa-box account-icon"></i>
-                    <h4>Histórico de Pedidos</h4>
-                    <p>Você tem 3 pedidos realizados.</p>
-                    <a href="/historico" class="btn edit-btn">Ver Pedidos</a>
-                </div>
-            </div>
-        </div>
     </main>
 
     <footer class="bg-light py-4">
