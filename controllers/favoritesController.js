@@ -71,7 +71,7 @@ const getFavorites = async (req, res, token) => {
         const user = await User.findByPk(userId, {
             include: {
                 model: Product,
-                attributes: ['id', 'name', 'price', 'image'], // Exemplo de carregar apenas os dados necessários
+                attributes: ['id', 'name', 'price', 'imageUrl'], // Exemplo de carregar apenas os dados necessários
                 through: { attributes: [] } // Não carregar dados da tabela intermediária
             },
         });
