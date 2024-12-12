@@ -29,11 +29,11 @@ const User = sequelize.define('User', {
   },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   }
 }, {
   hooks: {
@@ -44,9 +44,5 @@ const User = sequelize.define('User', {
     }
   }
 });
-
-User.hasMany(Cart, { foreignKey: 'userId' });
-User.hasMany(Order, { foreignKey: 'userId' }); 
-User.hasMany(Donation, { foreignKey: 'userId' }); 
 
 module.exports = User;
