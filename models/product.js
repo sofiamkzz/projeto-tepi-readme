@@ -1,7 +1,5 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const CartItem = require('./cartItem');
-const Category = require('./category');  
 
 const Product = sequelize.define('Product', {
   id: {
@@ -28,14 +26,6 @@ const Product = sequelize.define('Product', {
       type: DataTypes.STRING,
         allowNull: true,
   },
-  categoryId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Category, 
-      key: 'id',        
-    },
-    allowNull: false,  
-  },
   createdAt: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,  
@@ -47,8 +37,5 @@ const Product = sequelize.define('Product', {
 }, {
   timestamps: true, 
 });
-
-Product.hasMany(CartItem, { foreignKey: 'productId' });
-Product.belongsTo(Category, { foreignKey: 'categoryId' }); 
 
 module.exports = Product;
