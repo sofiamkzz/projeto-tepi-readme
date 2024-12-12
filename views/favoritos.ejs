@@ -3,49 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viva Colors Papelaria</title>
+    <title>Meus Favoritos - Viva Colors</title>
+    <link rel="icon" href="/images/logo.jpg" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/css/style.css">
     <style>
-         .navbar-brand img {
-            height: 50px;
-            /* Ajuste a altura da imagem conforme necessário */
+        /* Paleta de cores refinadas e elegantes */
+        :root {
+            --main-color: #d42249; /* Cor vibrante e sofisticada */
+            --accent-color: #ffccf9;
+            --secondary-color: #6a0572; /* Roxo sofisticado */
+            --light-color: #fff4f9;
+            --footer-background: #f8d7da;
+            --footer-text: #d6336c;
         }
 
+        body {
+            background-color: var(--light-color);
+            font-family: 'Poppins', sans-serif;
+            color: var(--secondary-color);
+        }
 
-        .remove-favorite {
-            font-size: 1.7rem;
+        /* Cabeçalho com gradiente vibrante */
+        .bg-gradient {
+            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+        }
+
+        /* Estilo para o título h1 */
+        h1 {
+            color: #ff6f91; /* Nova cor vibrante para o título */
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Botões mais sofisticados com gradiente */
+        .btn-main {
+            background: linear-gradient(90deg, var(--main-color), var(--accent-color));
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 30px;
+        }
+
+        .btn-main:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Cartões com design moderno e sombras suaves */
+        .favorite-card {
+            border-radius: 20px;
+            background-color: white;
             padding: 20px;
-            position: absolute;
-            /* Posiciona o ícone de forma absoluta */
-            right: 10px;
-            /* Ajusta a distância da borda direita */
-            top: 75%;
-            /* Centraliza verticalmente */
-            transform: translateY(-50%);
-
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
         }
 
-        .card-body {
-            position: relative; /* Faz com que o ícone seja posicionado em relação ao card */
+        .favorite-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0px 12px 20px rgba(0, 0, 0, 0.15);
         }
+
+        /* Remover favorito com destaque */
+        .remove-favorite {
+            color: var(--main-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .remove-favorite:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Títulos elegantes */
+        h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+
+        /* Rodapé elegante */
+        footer {
+            background: #d42249;
+            background: linear-gradient(90deg, #e70a3a8f 0%, rgba(255,255,255,0) 48%, rgba(209, 11, 54, 0.564) 100%);
+ }
+
+        .navbar {
+            background: #d42249;
+            background: linear-gradient(90deg, #e70a3a8f 20%, rgba(255, 255, 255, 0) 78%, rgba(209, 11, 54, 0.564) 100%);
+        }
+
+        .navbar-brand{
+            color:  #ffffff !important;
+            font-weight: bold;
+        }
+        img{
+            border-radius: 25px;
+        }
+
+        /* Título do cabeçalho com nova cor */
+        .text-dark-pink {
+            color: #d42249;
+        }
+
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="bg-light-pink py-3">
-        <div class="container text-center">
-            <h1 class="text-dark-pink fw-bold">Viva Colors</h1>
-            <p class="lead">A melhor loja de papelaria para você!</p>
-        </div>
-    </header>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
             <div class="navbar-brand fw-bold text-dark-pink">
-                <img src="/images/logo.jpg" alt="Logo Viva Colors">
+                <img src="/images/logo.jpg" alt="Logo Luivin's" style="height: 50px;">
                 Viva Colors
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -54,14 +125,15 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" href="promocoes">Promoções</a></li>
-                    <li class="nav-item"><a class="nav-link" href="favoritos">Favoritos</a></li>
-                    <% if (user) { %>
-                        <li class="nav-item"><a class="nav-link" href="conta">Minha Conta</a></li>
-                    <% } else { %>
-                        <li class="nav-item"><a class="nav-link" href="login">Login</a></li>
-                    <% } %>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Favoritos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Sair</a>
+                    </li>
                     <li class="nav-item cart-icon">
                         <a class="nav-link" href="carrinho">
                             <i class="fas fa-shopping-cart"></i>
@@ -73,90 +145,48 @@
         </div>
     </nav>
 
-    <!-- Carrossel -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
+    <header class="bg-light-pink py-3">
+        <div class="container text-center">
+            <h1 class="text-dark-pink fw-bold">Meus Favoritos</h1>
+            <p class="lead">Explore e compre seus itens favoritos da nossa papelaria!</p>
         </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="https://assets.ype.ind.br/uploads/material_escolar_ypedia-scaled.jpg" class="d-block w-100"
-                    alt="Promoção 1">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Viva Colors</h5>
-                    <p>Bem vindos(as)!</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="https://jornadaedu.com.br/wp-content/uploads/2023/01/economizar-no-material-escolar.png"
-                    class="d-block w-100" alt="Promoção 2">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Nossos Produtos</h5>
-                    <p>Produtos exclusivos e de alta qualidade.</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="https://www.simpack.pt/core/conteudos/Mala-com-material-escolar-Simpack.jpeg"
-                    class="d-block w-100" alt="Promoção 3">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Grandes Ofertas!</h5>
-                    <p>Aproveite nossas promoções imperdíveis.</p>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </button>
-    </div>
+    </header>
 
-    <!-- Cartão Fidelidade Section -->
+    <!-- Lista de Favoritos -->
     <main class="container my-5">
-        <section class="text-center mb-5">
-            <h2 class="text-dark-pink">Cartão Fidelidade</h2>
-            <p class="lead">Na primeira compra, pedidos acima de R$150,00 recebem um cartão fidelidade</p>
-            <p class="lead">E 5% da sua compra vai estar ajudando a campanha do mês.</p>
-        </section>
-
-        <!-- Product Carousel Section -->
-        <div class="row">
-            <% if (products.length > 0) { %>
-                <% products.forEach(product => { %>
-                    <div class="col-md-4 col-lg-3 mb-4">
-                        <div class="card shadow-sm">
-                            <img src="<%= product.imageUrl %>" class="card-img-top" alt="<%= product.name %>">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <%= product.name %>
-                                </h5>
-                                <p class="card-main">R$ <%= product.price %></p>
-                                <p class="card-text">Quantidade: <%= product.stock %></p>
-                                <a href="/carrinho/adicionar/<%=product.id%>"><button class="btn btn-main">Comprar</button></a>
-                                <i class="far fa-heart remove-favorite" title="Remover dos Favoritos"></i>
+        <div class="row text-center g-4">
+            <% if (favoritos.length === 0) { %>
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        Não há itens favoritados no momento.
+                    </div>
+                </div>
+            <% } else { %>
+                <% favoritos.forEach(favorito => { %>
+                    <div class="col-md-4">
+                        <div class="favorite-card shadow-sm">
+                            <img src="<%= favorito.Product.imageUrl %>" alt="<%= favorito.nome %>" class="img-fluid rounded">
+                            <h5 class="mt-3"><%= favorito.nome %></h5>
+                            <p class="text-main">R$ <%= favorito.preco %></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="carrinho.html" class="btn btn-main">Comprar</a>
+                                <form action="/favoritos/remover/<%= favorito.id %>" method="POST" class="d-inline">
+                                    <input type="hidden" name="produtoId" value="<%= favorito.id %>">
+                                    <button type="submit" class="remove-favorite btn btn-link">
+                                        <i class="fas fa-heart"></i> Remover
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
-                <% }); %>  
-            <% } else { %>
-                <p>Novos produtos em breve.</p>
+                <% }); %>
             <% } %>
-        </div>        
-    </main>
+        </div>
+    </main>    
 
-    <footer class="bg-light-pink py-4">
+    <footer class="bg-light py-4">
         <div class="container text-center">
-            <p class="text-dark-pink mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
+            <p class="mb-0">&copy; 2024 Viva Colors. Todos os direitos reservados.</p>
         </div>
     </footer>
 
