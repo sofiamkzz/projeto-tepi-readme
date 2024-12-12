@@ -31,6 +31,7 @@ const loginUser = async (req, res) => {
             maxAge: 3600000,  // 1 hora
         });
 
+        req.user = user;
         req.session.userId = user.id;
         req.session.userRole = user.role;  
 
