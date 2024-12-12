@@ -3,7 +3,17 @@ const { validationResult } = require('express-validator');
 const User = require('../models/user');
 
 const createUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, phoneNumber } = req.body;
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+        return res.render('cadastro', { mensagem: 'E-mail inválido.' });
+    }
+    
+    const phoneRegex = /^(\(\d{2}\)\s?|\d{2}\s?)\d{5}-\d{4}$/;
+    if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+        return res.render('cadastro', { mensagem: 'Número de telefone inválido.' });
+    }
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -16,14 +26,15 @@ const createUser = async (req, res) => {
             return res.render('cadastro', { mensagem: 'Usuário já existe.' });
         }
 
-        await User.create({ name, email, password});
+        await User.create({ name, email, password, phoneNumber });
 
         res.redirect('/login');
     } catch (error) {
-        console.error('Erro ao inserir usuário:', error);
-        res.render('cadastro', { mensagem: 'Erro ao cadastrar usuário.' });
+        console.error('Erro ao inserir usuário:', error.message || error);
+        res.render('cadastro', { mensagem: 'Houve um erro ao tentar cadastrar o usuário.' });
     }
 };
+
 
 const updateUser = async (req, res) => {
     const { newName, newEmail, newPassword } = req.body;
