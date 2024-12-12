@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.get('/favoritos', getFavorites);
 
-router.post('/favoritos/adicionar/:id', addFavorite);
+router.get('/favoritos/adicionar/:id', addFavorite);
 
-router.post('/favoritos/remover/:id', removeFavorite);
+router.get('/favoritos/remover/:id', removeFavorite);
 
 module.exports = router;
