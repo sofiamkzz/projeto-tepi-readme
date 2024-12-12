@@ -9,22 +9,6 @@ const CartItem = sequelize.define('CartItem', {
     primaryKey: true,
     autoIncrement: true,
   },
-  cartId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Cart,
-      key: 'id',
-    },
-    allowNull: false,
-  },
-  productId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Product,
-      key: 'id',
-    },
-    allowNull: false,
-  },
   quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -35,15 +19,12 @@ const CartItem = sequelize.define('CartItem', {
   },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   }
 });
-
-CartItem.belongsTo(Cart, { foreignKey: 'cartId' });
-CartItem.belongsTo(Product, { foreignKey: 'productId' });
 
 module.exports = CartItem;
