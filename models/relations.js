@@ -11,10 +11,12 @@ User.hasMany(Cart, { foreignKey: 'userId' });
 User.hasMany(Order, { foreignKey: 'userId' });
 User.hasMany(Donation, { foreignKey: 'userId' });
 User.hasMany(Favorite, { foreignKey: 'userId' });
+User.hasMany(Product, { foreignKey: 'userId' });
 
 Product.hasMany(CartItem, { foreignKey: 'productId' });
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Product.hasMany(Favorite, { foreignKey: 'productId' });
+Product.belongsTo(User, { foreignKey: 'userId' });
 
 Category.hasMany(Product, { foreignKey: 'categoryId' });
 
@@ -23,6 +25,7 @@ Cart.hasMany(CartItem, { foreignKey: 'cartId' });
 
 CartItem.belongsTo(Cart, { foreignKey: 'cartId' });
 CartItem.belongsTo(Product, { foreignKey: 'productId' });
+CartItem.belongsTo(User, { foreignKey: 'userId' });
 
 Order.belongsTo(User, { foreignKey: 'userId' });
 Order.belongsTo(Cart, { foreignKey: 'cartId' });
