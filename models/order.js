@@ -1,30 +1,11 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const User = require('./user');
-const Cart = require('./cart');
-const Donation = require('./donation');  
 
 const Order = sequelize.define('Order', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: User,
-      key: 'id',
-    },
-    allowNull: false,
-  },
-  cartId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Cart,
-      key: 'id',
-    },
-    allowNull: false,
   },
   status: {
     type: DataTypes.ENUM('pending', 'completed', 'shipped', 'canceled'),
@@ -42,16 +23,12 @@ const Order = sequelize.define('Order', {
   },
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   },
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: DataTypes.NOW,
   }
 });
-
-Order.belongsTo(User, { foreignKey: 'userId' });
-Order.belongsTo(Cart, { foreignKey: 'cartId' });
-Order.hasMany(Donation, { foreignKey: 'orderId' });
 
 module.exports = Order;
