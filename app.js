@@ -16,7 +16,7 @@ const favoritesRoutes = require('./routes/favoritesRoutes');
 
 const Product = require('./models/product');
 
-const authenticateToken = require('./middleware/auth');
+const authenticateToken = require('./middleware/authenticateToken');
 
 const app = express();
 const port = 3000;
