@@ -8,15 +8,11 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
 const sequelize = require('./config/database');
-
+const indexRoutes = require('./routes/indexRoutes');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const favoritesRoutes = require('./routes/favoritesRoutes');
-
-const Product = require('./models/product');
-
-const authenticateToken = require('./middleware/authenticateToken');
 
 const app = express();
 const port = 3000;
@@ -43,7 +39,6 @@ const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.set('view engine', 'ejs');
 
 app.use(session({
@@ -52,9 +47,9 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         secure: process.env.NODE_ENV === 'production',
-        httpOnly: true, 
-        maxAge: 3600000 
-    }
+        httpOnly: true,
+        maxAge: 3600000,
+    },
 }));
 
 sequelize.sync({ alter: true })
@@ -65,29 +60,13 @@ sequelize.sync({ alter: true })
         console.error("Erro ao sincronizar o banco de dados: ", error);
     });
 
-app.get('/', async (req, res) => {
-    try {
-        const products = await Product.findAll({});
-
-        const user = req.user || "";
-
-        res.render('index', { user, products: products || [] });
-    } catch (error) {
-        console.error("Erro ao buscar produtos:", error);
-        res.status(500).send("Erro ao carregar produtos");
-    }
-});
-
+app.use("/", indexRoutes);  
 app.use(userRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(favoritesRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-app.get('/promocoes', async (req, res) => {
-    res.render('promotions');
-});
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);
