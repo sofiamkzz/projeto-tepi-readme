@@ -11,12 +11,12 @@ User.hasMany(Cart, { foreignKey: 'userId' });
 User.hasMany(Order, { foreignKey: 'userId' });
 User.hasMany(Donation, { foreignKey: 'userId' });
 User.hasMany(Favorite, { foreignKey: 'userId' });
-User.hasMany(Product, { foreignKey: 'userId' });
+User.belongsToMany(Product, { through: 'UserProducts' });
 
 Product.hasMany(CartItem, { foreignKey: 'productId' });
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Product.hasMany(Favorite, { foreignKey: 'productId' });
-Product.belongsTo(User, { foreignKey: 'userId' });
+Product.belongsToMany(User, { through: 'UserProducts' });
 
 Category.hasMany(Product, { foreignKey: 'categoryId' });
 
