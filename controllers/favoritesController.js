@@ -47,12 +47,12 @@ const removeFavorite = async (req, res) => {
             return res.status(404).send('Usuário ou produto não encontrado');
         }
 
-        const isFavorite = await user.hasProduct(product); // Verificar se está favoritado
+        const isFavorite = await user.hasProduct(product); 
         if (!isFavorite) {
             return res.status(400).send('Produto não está nos seus favoritos');
         }
 
-        await user.removeProduct(product); // Removendo o produto dos favoritos
+        await user.removeProduct(product); 
         res.status(200).json({ message: 'Produto removido dos favoritos!' });
     } catch (error) {
         console.error('Erro ao remover favorito:', error);
@@ -71,8 +71,8 @@ const getFavorites = async (req, res, token) => {
         const user = await User.findByPk(userId, {
             include: {
                 model: Product,
-                attributes: ['id', 'name', 'price', 'imageUrl'], // Exemplo de carregar apenas os dados necessários
-                through: { attributes: [] } // Não carregar dados da tabela intermediária
+                attributes: ['id', 'name', 'price', 'imageUrl'], 
+                through: { attributes: [] } 
             },
         });
 
