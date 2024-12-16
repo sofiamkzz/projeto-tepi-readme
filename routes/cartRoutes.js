@@ -1,5 +1,6 @@
 const express = require('express');
 const { getCart, addToCart, removeFromCart } = require('../controllers/cartController');
+const authenticateToken = require('../middleware/authenticateToken');
 const router = express.Router();
 
 /**
@@ -31,7 +32,7 @@ const router = express.Router();
  *                     type: number
  *                     format: float
  */
-router.get('/carrinho', getCart);
+router.get('/carrinho', authenticateToken, getCart);
 
 /**
  * @swagger
@@ -52,7 +53,7 @@ router.get('/carrinho', getCart);
  *       404:
  *         description: Produto não encontrado
  */
-router.get('/carrinho/adicionar/:id', addToCart);
+router.get('/carrinho/adicionar/:id', authenticateToken, addToCart);
 
 /**
  * @swagger
@@ -73,6 +74,6 @@ router.get('/carrinho/adicionar/:id', addToCart);
  *       404:
  *         description: Produto não encontrado no carrinho
  */
-router.get('/carrinho/remover/:id', removeFromCart);
+router.get('/carrinho/remover/:id', authenticateToken, removeFromCart);
 
 module.exports = router;
