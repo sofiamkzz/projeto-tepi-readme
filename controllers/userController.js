@@ -75,11 +75,9 @@ const updateUser = async (req, res) => {
 
 const deleteUserById = async (req, res) => {
     const { id } = req.params;
-    console.log(id);
 
     try {
         const user = await User.findByPk(id);
-        console.log(id);
 
         if (!user) {
             return res.status(404).send('Usuário não encontrado.');
