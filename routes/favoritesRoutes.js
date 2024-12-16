@@ -49,7 +49,7 @@ router.get('/favoritos', getFavorites);
  *       404:
  *         description: Produto não encontrado
  */
-router.get('/favoritos/adicionar/:id', addFavorite);
+router.get('/favoritos/adicionar/:productId', addFavorite);
 
 /**
  * @swagger
@@ -70,6 +70,6 @@ router.get('/favoritos/adicionar/:id', addFavorite);
  *       404:
  *         description: Produto não encontrado nos favoritos
  */
-router.get('/favoritos/remover/:id', removeFavorite);
+router.get('/favoritos/remover/:productId', removeFavorite);
 
 module.exports = router;
