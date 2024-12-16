@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const secret = process.env.SECRET;
 
 const authenticateToken = (req, res, next) => {
-    const token = req.headers['authorization'];
+    const token = req.header('Authorization') && req.header('Authorization').replace('Bearer ', '');
 
     if (!token) {
         return res.status(401).json({ error: 'Token não fornecido.' });
