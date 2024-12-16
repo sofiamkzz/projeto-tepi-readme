@@ -4,6 +4,8 @@ require('./models/relations');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const sequelize = require('./config/database');
 
@@ -18,6 +20,25 @@ const authenticateToken = require('./middleware/auth');
 
 const app = express();
 const port = 3000;
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'API da Papelaria Viva Colors',
+            version: '1.0.0',
+            description: 'Documentação da API de um aplicativo de e-commerce',
+        },
+        servers: [
+            {
+                url: 'http://localhost:3000',
+            },
+        ],
+    },
+    apis: ['./routes/*.js'],
+};
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -61,6 +82,8 @@ app.use(userRoutes);
 app.use(authRoutes);
 app.use(cartRoutes);
 app.use(favoritesRoutes);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.get('/promocoes', async (req, res) => {
     res.render('promotions');
