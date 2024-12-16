@@ -25,6 +25,10 @@ const getCart = async (req, res) => {
     }
 };
 
+const getPayment = async (req, res) => {
+    res.render('pagamento');
+}
+
 const addToCart = async (req, res) => {
     const productId = req.params.id; 
     const quantity = 1;
@@ -88,6 +92,7 @@ const removeFromCart = async (req, res) => {
 
 module.exports = {
     getCart,
+    getPayment,
     addToCart,
     removeFromCart
 };
