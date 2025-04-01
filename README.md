@@ -16,11 +16,14 @@ Este projeto, parte da disciplina de Tópicos Especiais e Projeto Integrador, vi
 
 ## Funcionalidades
 
+Implementadas:
 - **Cadastro e Login de Usuário:** Cadastro e login por e-mail e senha.
 - **Carrinho de Compras:** Adição, visualização e gerenciamento de itens. Além do cálculo do valor total da compra.
 - **Pedido:** Processo de compra com confirmação e atualização de status.
-- **Doação:** Cálculo, exibição da doação mensal e relatórios sobre o total arrecadado.
 - **Gerenciamento de Conta do Usuário:** Atualização de informações pessoais e histórico de compras.
+
+Em andamento:
+- **Doação:** Cálculo, exibição da doação mensal e relatórios sobre o total arrecadado.
 - **Adicional:** Gestão do cartão fidelidade.
 
 ## Referências
